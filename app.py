@@ -65,7 +65,9 @@ def getPlayerResults():
     gameRecords = cur.fetchall()
 
     allGameRecords = []
-    for game in gameRecords:
-        allGameRecords.append("{" + game.gameId + "}")
+    for game in gameRecords:   
+        allGameRecords.append("{" + game[0] + "}")
+    
+    #return jsonify(gameRecords[0])
     
     return jsonify(allGameRecords)
