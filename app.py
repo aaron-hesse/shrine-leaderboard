@@ -63,12 +63,6 @@ def getPlayerResults():
     cur = conn.cursor()
     cur.execute("SELECT * FROM gameRecords WHERE playerId=%s", playerIdStr)
     gameRecords = cur.fetchall()
-
-    # turn this into a JSON object to return.
-
-    msg = ""
-    for gameInfo in gameRecords:
-        msg += "gameId:" + gameInfo[0] + " "
-        msg += "winningPlayerId: " + gameInfo[3]
-
-    return msg;
+    allGameRecords = [{'gameid':cur.gameid} for game in gameRecords]
+    
+    return jsonify(allGameRecords)
