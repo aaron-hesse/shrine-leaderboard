@@ -66,7 +66,7 @@ def getPlayerResults():
 
     allGameRecords = []
     for game in gameRecords:   
-        allGameRecords.append("{" + game[0] + "}")
+        allGameRecords.append("{" + str(game[0]) + "}")
     
     #return jsonify(gameRecords[0])
     
