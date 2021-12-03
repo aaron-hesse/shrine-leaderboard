@@ -4,6 +4,7 @@ from flask import jsonify
 
 import os
 import psycopg2
+import json
 
 DATABASE_URL = os.environ['DATABASE_URL']
 
@@ -68,4 +69,4 @@ def getPlayerResults():
     for game in gameRecords:   
         allGameRecords.append("{" + str(game[0]) + "}")
     
-    return gameRecords
+    return json.dumps(gameRecords)
