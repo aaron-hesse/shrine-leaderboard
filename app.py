@@ -10,6 +10,7 @@ DATABASE_URL = os.environ['DATABASE_URL']
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
 app = Flask(__name__)
+app.config["JSONIFY_PRETTYPRINT_REGULAR"] = True
 
 @app.route("/")
 def index():
@@ -31,8 +32,6 @@ def recordGameResults():
     cur.execute("INSERT INTO gameRecords (gameId, player1Id, player2Id, winningPlayerId) VALUES (%s,%s,%s,%s)", (gameId,player1Id,player2Id,winningPlayerId) )
     conn.commit()
 
-    # return a JSON object of the data written to the table
-
     return jsonify(
         gameid=gameId,
         player1id=player1Id,
@@ -50,9 +49,12 @@ def getGameResults():
     cur.execute("SELECT * FROM gameRecords WHERE gameId=%s", gameIdStr)
     gameRecord = cur.fetchone()
 
-    # turn this into a JSON object to return
-
-    return "gameId: " + str(gameRecord[0]) + " winningPlayerId: " + str(gameRecord[3])
+    return jsonify(
+        gameid=gameRecord[0],
+        player1id=gameRecord[1],
+        player2id=gameRecord[2],
+        winningplayerid=gameRecord[3]
+    )
 
 @app.route("/getPlayerResults")
 def getPlayerResults():
@@ -68,3 +70,5 @@ def getPlayerResults():
     for gameInfo in gameRecords:
         msg += "gameId:" + gameInfo[0] + " "
         msg += "winningPlayerId: " + gameInfo[3]
+
+    return msg;
