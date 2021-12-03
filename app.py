@@ -34,7 +34,7 @@ def getGameResults():
     gameId = int(gameIdStr)
 
     cur = conn.cursor()
-    cur.execute("SELECT * FROM gameRecords WHERE gameId=%s", gameId)
+    cur.execute("SELECT * FROM gameRecords WHERE gameId=%s", gameIdStr)
     gameRecord = cur.fetchone()
 
 
