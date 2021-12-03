@@ -17,7 +17,7 @@ def index():
 @app.route("/recordGameResults")
 def recordGameResults():
     
-    gameId = request.args.get('gameId')
+    gameId = int(request.args.get('gameId'))
     player1Id = request.args.get('player1Id')
     player2Id = request.args.get('player2Id')
     winningPlayerId = request.args.get('winningPlayerId')
