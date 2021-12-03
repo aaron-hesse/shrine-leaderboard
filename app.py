@@ -28,9 +28,8 @@ def recordGameResults():
     player2_id = int(request.args.get('player2Id'))
     winning_player_id = int(request.args.get('winningPlayerId'))
 
-    cur = conn.cursor()
-
     try:
+        cur = conn.cursor()
         cur.execute("INSERT INTO gameRecords (gameId, player1Id, player2Id, winningPlayerId) VALUES (%s,%s,%s,%s)", (gameId,player1Id,player2Id,winningPlayerId) )
         conn.commit()
     except:
