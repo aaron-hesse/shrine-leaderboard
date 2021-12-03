@@ -22,7 +22,7 @@ def recordGameResults():
     player2Id = request.args.get('player2Id')
     winningPlayerId = request.args.get('winningPlayerId')
 
-    msg = "gameidtype is: " + str(type(gameId))
+    msg = "gameid type is: " + str(type(gameId) is str)
 
     #conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
