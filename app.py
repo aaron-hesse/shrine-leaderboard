@@ -49,12 +49,17 @@ def getGameResults():
 
     game_id_str = request.args.get('gameId')
 
+    game_record = None
+
     try:
         cur = conn.cursor()
         cur.execute("SELECT * FROM gameRecords WHERE gameId=%s", game_id_str)
         game_record = cur.fetchone()
     except:
-        return "Unable to retrieve game data for that gameId, gameId may not exist."
+        return "Unable to retrieve game data for that gameId."
+    
+    if not game_record:
+        return "No game data exists for that gameId. The gameId may not exist."
 
     return jsonify(
         gameId=game_record[0],
