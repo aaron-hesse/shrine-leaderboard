@@ -27,7 +27,7 @@ def recordGameResults():
     try:
         cur = conn.cursor()
         cur.execute("INSERT INTO gameRecords (gameId,player1Id,player2Id,winningPlayerId) VALUES (?,?,?,?)", (gameId,player1Id,player2Id,winningPlayerId) )
-        #conn.commit()
+        conn.commit()
         msg = "(recordGameResults): INSERTING the following information: " + gameId + " " + " player1Id: " + player1Id + " player2Id: " + player2Id + " winningPlayerId: " + winningPlayerId
     except:
         msg = "error in insert operation"
