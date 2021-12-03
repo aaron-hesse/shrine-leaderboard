@@ -24,7 +24,6 @@ def recordGameResults():
     cur = conn.cursor()
     cur.execute("INSERT INTO gameRecords (gameId, player1Id, player2Id, winningPlayerId) VALUES (%s,%s,%s,%s)", (gameId,player1Id,player2Id,winningPlayerId) )
     conn.commit()
-    conn.close()
 
     return "Wrote the game info into the table."
 
