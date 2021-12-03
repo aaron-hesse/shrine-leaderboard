@@ -72,7 +72,7 @@ def getPlayerResults():
         allGameRecords += ' gameid: ' + str(game[0]) + ","
         allGameRecords += ' player1id: ' + str(game[1]) + ","
         allGameRecords += ' player2id: ' + str(game[2]) + ","
-        allGameRecords += ' winningPlayerid: ' + str(game[3]) + ","
+        allGameRecords += ' winningPlayerid: ' + str(game[3])
         allGameRecords += "}"
     allGameRecords += "}"
     
