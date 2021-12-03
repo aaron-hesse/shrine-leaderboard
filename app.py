@@ -61,7 +61,7 @@ def getPlayerResults():
     playerIdStr = request.args.get('playerId')
 
     cur = conn.cursor()
-    cur.execute("SELECT * FROM gameRecords WHERE player1Id=%s OR WHERE player2Id=%s", playerIdStr)
+    cur.execute("SELECT * FROM gameRecords WHERE player1Id=%s OR WHERE player2Id=%s", (playerIdStr,playerIdStr))
     gameRecords = cur.fetchall()
 
     allGameRecords = [{'gameid':cur.gameid} for game in gameRecords]
