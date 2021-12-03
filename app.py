@@ -18,13 +18,13 @@ def index():
 def recordGameResults():
     
     gameId = int(request.args.get('gameId'))
-    player1Id = request.args.get('player1Id')
-    player2Id = request.args.get('player2Id')
-    winningPlayerId = request.args.get('winningPlayerId')
+    player1Id = int(request.args.get('player1Id'))
+    player2Id = int(request.args.get('player2Id'))
+    winningPlayerId = int(request.args.get('winningPlayerId'))
 
     msg = "gameid type is: " + str(type(gameId) is str)
 
-    #conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+    conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
     #msg = "(recordGameResults): INSERTING the following information: " + gameId + " " + " player1Id: " + player1Id + " player2Id: " + player2Id + " winningPlayerId: " + winningPlayerId
     #cur = conn.cursor()
