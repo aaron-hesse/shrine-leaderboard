@@ -65,15 +65,26 @@ def getPlayerResults():
     cur.execute("SELECT * FROM gameRecords WHERE player1Id=%s OR player2Id=%s", (playerIdStr,playerIdStr))
     gameRecords = cur.fetchall()
 
-    allGameRecords = ""
-    allGameRecords += "{"
-    for game in gameRecords:  
-        allGameRecords += "{"
-        allGameRecords += ' gameid: ' + str(game[0]) + ","
-        allGameRecords += ' player1id: ' + str(game[1]) + ","
-        allGameRecords += ' player2id: ' + str(game[2]) + ","
-        allGameRecords += ' winningPlayerid: ' + str(game[3])
-        allGameRecords += "}"
-    allGameRecords += "}"
+    #allGameRecords = ""
+    #allGameRecords += "{"
+    #for game in gameRecords:  
+      #  allGameRecords += "{"
+      #  allGameRecords += " 'gameid': " + str(game[0]) + ","
+     #   allGameRecords += " 'player1id': " + str(game[1]) + ","
+    #    allGameRecords += " 'player2id': " + str(game[2]) + ","
+    #    allGameRecords += " 'winningPlayerid': " + str(game[3])
+    #    allGameRecords += "}"
+    #allGameRecords += "}"
+
+    allGameRecords = {}
     
-    return allGameRecords
+    #for gameR in gameRecords:
+        #game['gameid'] = str(gameR[0])
+        #game['player1id'] = str(gameR[1])
+        #game['player2id'] = str(gameR[2])
+        #game['winningplayerid'] = str(gameR[3])
+        #allGameRecords
+    
+    jsonObj = json.dumps(gameRecords[0])
+    
+    return jsonObj
