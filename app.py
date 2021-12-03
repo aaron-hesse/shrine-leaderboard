@@ -1,5 +1,7 @@
 from flask import Flask
 from flask import request
+from flask import jsonify
+
 import os
 import psycopg2
 
@@ -13,6 +15,10 @@ app = Flask(__name__)
 def index():
     return "Hello World!"
 
+# add support for GET and POST or figure out which one to use the most?
+# figure out how to add authentication for the endpoints
+# look into serverless tech
+
 @app.route("/recordGameResults")
 def recordGameResults():
     
@@ -25,7 +31,14 @@ def recordGameResults():
     cur.execute("INSERT INTO gameRecords (gameId, player1Id, player2Id, winningPlayerId) VALUES (%s,%s,%s,%s)", (gameId,player1Id,player2Id,winningPlayerId) )
     conn.commit()
 
-    return "Wrote the game info into the table."
+    # return a JSON object of the data written to the table
+
+    return jsonify(
+        gameid=gameId,
+        player1id=player1Id,
+        player2id=player2Id,
+        winningplayerid=winningPlayerId
+    )
 
 @app.route("/getGameResults")
 def getGameResults():
@@ -37,6 +50,21 @@ def getGameResults():
     cur.execute("SELECT * FROM gameRecords WHERE gameId=%s", gameIdStr)
     gameRecord = cur.fetchone()
 
+    # turn this into a JSON object to return
 
-    return "gameId: " + str(gameRecord[0]) + " player1Id: " + str(gameRecord[1])
+    return "gameId: " + str(gameRecord[0]) + " winningPlayerId: " + str(gameRecord[3])
 
+@app.route("/getPlayerResults")
+def getPlayerResults():
+
+    playerIdStr = request.args.get('playerId')
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM gameRecords WHERE playerId=%s", playerIdStr)
+    gameRecords = cur.fetchall()
+
+    # turn this into a JSON object to return.
+
+    msg = ""
+    for gameInfo in gameRecords:
+        msg += "gameId:" + gameInfo[0] + " "
+        msg += "winningPlayerId: " + gameInfo[3]
