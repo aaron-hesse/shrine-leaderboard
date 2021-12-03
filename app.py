@@ -33,8 +33,8 @@ def recordGameResults():
     try:
         cur.execute("INSERT INTO gameRecords (gameId, player1Id, player2Id, winningPlayerId) VALUES (%s,%s,%s,%s)", (gameId,player1Id,player2Id,winningPlayerId) )
         conn.commit()
-    except UniqueViolation:
-        return "Game results with that ID already exist."
+    except:
+        return "Unable to save game data. Game results with that ID may already exist."
 
     return jsonify(
         gameId=gameId,
