@@ -38,5 +38,5 @@ def getGameResults():
     gameRecord = cur.fetchone()
 
 
-    return "gameId: " + gameRecord[0] + " player1Id: " + gameRecord[1]
+    return "gameId: " + str(gameRecord[0]) + " player1Id: " + str(gameRecord[1])
 
