@@ -5,6 +5,8 @@ import psycopg2
 
 DATABASE_URL = os.environ['DATABASE_URL']
 
+conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+
 app = Flask(__name__)
 
 @app.route("/")
@@ -24,7 +26,7 @@ def recordGameResults():
 
     msg = "gameid type is: " + str(type(gameId) is str)
 
-    conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+    
 
     msg = "(recordGameResults): INSERTING the following information: " + gameId + " " + " player1Id: " + player1Id + " player2Id: " + player2Id + " winningPlayerId: " + winningPlayerId
     cur = conn.cursor()
