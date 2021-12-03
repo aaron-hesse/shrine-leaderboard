@@ -4,7 +4,6 @@ from flask import jsonify
 
 import os
 import psycopg2
-import json
 
 DATABASE_URL = os.environ['DATABASE_URL']
 
@@ -38,10 +37,10 @@ def recordGameResults():
         return "Unable to save game data. Game results with that ID may already exist."
 
     return jsonify(
-        gameId=gameId,
-        player1Id=player1Id,
-        player2Id=player2Id,
-        winningPlayerId=winningPlayerId
+        gameId=game_id,
+        player1Id=player1_id,
+        player2Id=player2_id,
+        winningPlayerId=winning_player_id
     )
 
 @app.route("/getGameResults")
