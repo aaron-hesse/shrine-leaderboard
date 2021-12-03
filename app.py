@@ -78,4 +78,4 @@ def getPlayerResults():
     
     allGameRecords.append("}")
     
-    return jsonify(gameRecords[0])
+    return allGameRecords
