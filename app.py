@@ -64,6 +64,8 @@ def getPlayerResults():
     cur.execute("SELECT * FROM gameRecords WHERE player1Id=%s OR player2Id=%s", (playerIdStr,playerIdStr))
     gameRecords = cur.fetchall()
 
-    allGameRecords = [{'gameid':game.gameid} for game in gameRecords]
+    allGameRecords = []
+    for game in gameRecords:
+        allGameRecords.append("{" + game.gameId + "}")
     
     return jsonify(allGameRecords)
