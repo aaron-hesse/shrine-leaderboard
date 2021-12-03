@@ -30,7 +30,8 @@ def recordGameResults():
 @app.route("/getGameResults")
 def getGameResults():
 
-    gameId = int(request.args.get('gameId'))
+    gameIdStr = request.args.get('gameId')
+    gameId = int(gameIdStr)
 
     cur = conn.cursor()
     cur.execute("SELECT * FROM gameRecords WHERE gameId=%s", gameId)
