@@ -12,7 +12,7 @@ def index():
 @app.route("/recordGameResults")
 def recordGameResults():
     gameId = request.args.get('gameId')
-    player1Name = request.args.get('player1Name')
-    player2Name = request.args.get('player2Name')
-    winningPlayer = request.args.get('winningPlayer')
-    return "recordGameResults: " + gameId + " " + " player1Name: " + player1Name
+    player1Id = request.args.get('player1Id')
+    player2Id = request.args.get('player2Id')
+    winningPlayerId = request.args.get('winningPlayerId')
+    return "recordGameResults: " + gameId + " " + " player1Id: " + player1Id + " player2Id: " + player2Id + " winningPlayerId: " + winningPlayerId
