@@ -43,7 +43,6 @@ def recordGameResults():
 def getGameResults():
 
     gameIdStr = request.args.get('gameId')
-    gameId = int(gameIdStr)
 
     cur = conn.cursor()
     cur.execute("SELECT * FROM gameRecords WHERE gameId=%s", gameIdStr)
@@ -60,9 +59,11 @@ def getGameResults():
 def getPlayerResults():
 
     playerIdStr = request.args.get('playerId')
+
     cur = conn.cursor()
-    cur.execute("SELECT * FROM gameRecords WHERE playerId=%s", playerIdStr)
+    cur.execute("SELECT * FROM gameRecords WHERE player1Id=%s OR WHERE player2Id=%s", playerIdStr)
     gameRecords = cur.fetchall()
+
     allGameRecords = [{'gameid':cur.gameid} for game in gameRecords]
     
     return jsonify(allGameRecords)
