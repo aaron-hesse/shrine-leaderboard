@@ -73,12 +73,17 @@ def getPlayerResults():
 
     player_id_str = request.args.get('playerId')
 
+    game_records = None
+
     try:
         cur = conn.cursor()
         cur.execute("SELECT * FROM gameRecords WHERE player1Id=%s OR player2Id=%s", (player_id_str,player_id_str))
         game_records = cur.fetchall()
     except:
-        return "Unable to select game data for that playerId. That playerId may not exist."
+        return "Unable to select game data for that playerId."
+
+    if not game_records:
+        return "No player results exist for that playerId. The playerId may not exist."
 
     all_game_records = []
     
