@@ -28,11 +28,11 @@ def recordGameResults():
         cur = conn.cursor()
         #cur.execute("INSERT INTO gameResults (gameId,player1Id,player2Id,winningPlayerId) VALUES (?,?,?,?)", (gameId,player1Id,player2Id,winningPlayerId) )
         #conn.commit()
-        #msg = "(recordGameResults): INSERTING the following information: " + gameId + " " + " player1Id: " + player1Id + " player2Id: " + player2Id + " winningPlayerId: " + winningPlayerId
+        msg = "(recordGameResults): INSERTING the following information: " + gameId + " " + " player1Id: " + player1Id + " player2Id: " + player2Id + " winningPlayerId: " + winningPlayerId
     except:
         msg = "error in insert operation"
     
     finally:
         conn.close()
 
-    return msg
+    return 
