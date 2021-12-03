@@ -28,7 +28,7 @@ def recordGameResults():
 
     
 
-    msg = "(recordGameResults): INSERTING the following information: " + gameId + " " + " player1Id: " + player1Id + " player2Id: " + player2Id + " winningPlayerId: " + winningPlayerId
+    #msg = "(recordGameResults): INSERTING the following information: " + gameId + " " + " player1Id: " + player1Id + " player2Id: " + player2Id + " winningPlayerId: " + winningPlayerId
     cur = conn.cursor()
     #cur.execute("INSERT INTO gameRecords (gameId, player1Id, player2Id, winningPlayerId) VALUES (?,?,?,?)", (gameId,player1Id,player2Id,winningPlayerId) )
     #conn.commit()
