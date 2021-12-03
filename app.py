@@ -35,4 +35,4 @@ def recordGameResults():
     finally:
         conn.close()
 
-    return 
+    return msg
