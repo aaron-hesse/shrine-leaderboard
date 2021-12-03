@@ -30,7 +30,7 @@ def recordGameResults():
 
     try:
         cur = conn.cursor()
-        cur.execute("INSERT INTO gameRecords (gameId, player1Id, player2Id, winningPlayerId) VALUES (%s,%s,%s,%s)", (gameId,player1Id,player2Id,winningPlayerId) )
+        cur.execute("INSERT INTO gameRecords (gameId, player1Id, player2Id, winningPlayerId) VALUES (%s,%s,%s,%s)", (game_id,player1_id,player2_id,winning_player_id) )
         conn.commit()
     except:
         return "Unable to save game data. Game results with that ID may already exist."
