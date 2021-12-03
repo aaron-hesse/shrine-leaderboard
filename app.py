@@ -30,6 +30,7 @@ def recordGameResults():
     winning_player_id = int(request.args.get('winningPlayerId'))
 
     cur = conn.cursor()
+
     try:
         cur.execute("INSERT INTO gameRecords (gameId, player1Id, player2Id, winningPlayerId) VALUES (%s,%s,%s,%s)", (gameId,player1Id,player2Id,winningPlayerId) )
         conn.commit()
@@ -48,9 +49,12 @@ def getGameResults():
 
     game_id_str = request.args.get('gameId')
 
-    cur = conn.cursor()
-    cur.execute("SELECT * FROM gameRecords WHERE gameId=%s", game_id_str)
-    game_record = cur.fetchone()
+    try:
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM gameRecords WHERE gameId=%s", game_id_str)
+        game_record = cur.fetchone()
+    except:
+        return "Unable to retrieve game data for that gameId, gameId may not exist."
 
     return jsonify(
         gameId=game_record[0],
@@ -64,9 +68,12 @@ def getPlayerResults():
 
     player_id_str = request.args.get('playerId')
 
-    cur = conn.cursor()
-    cur.execute("SELECT * FROM gameRecords WHERE player1Id=%s OR player2Id=%s", (player_id_str,player_id_str))
-    game_records = cur.fetchall()
+    try:
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM gameRecords WHERE player1Id=%s OR player2Id=%s", (player_id_str,player_id_str))
+        game_records = cur.fetchall()
+    except:
+        return "Unable to select game data for that playerId. That playerId may not exist."
 
     all_game_records = []
     
