@@ -76,15 +76,13 @@ def getPlayerResults():
     #    allGameRecords += "}"
     #allGameRecords += "}"
 
-    allGameRecords = {}
+    allGameRecords = []
+    game = {}
+    for gameR in gameRecords:
+        game['gameid'] = str(gameR[0])
+        game['player1id'] = str(gameR[1])
+        game['player2id'] = str(gameR[2])
+        game['winningplayerid'] = str(gameR[3])
+        allGameRecords.append(game)
     
-    #for gameR in gameRecords:
-        #game['gameid'] = str(gameR[0])
-        #game['player1id'] = str(gameR[1])
-        #game['player2id'] = str(gameR[2])
-        #game['winningplayerid'] = str(gameR[3])
-        #allGameRecords
-    
-    jsonObj = json.dumps(gameRecords[0])
-    
-    return jsonObj
+    return allGameRecords
