@@ -85,4 +85,4 @@ def getPlayerResults():
         game['winningplayerid'] = str(gameR[3])
         allGameRecords.append(game)
     
-    return allGameRecords
+    return jsonify(allGameRecords)
