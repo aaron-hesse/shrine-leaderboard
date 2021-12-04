@@ -21,36 +21,27 @@
     }
 
     function getPlayerResults(playerId) {
-        apiResponse = makeBackendAPIRequest("https://shrine-realpython-example-app.herokuapp.com/getPlayerResults?playerId=548", updateGameResultsTable)
-        if (apiResponse){
-            console.log('apiResponse: ' + apiResponse)
-            // update the front-end table results
-            // iterate over the JSON object array, and add a tow to the table for each entry
-        }
+        makeBackendAPIRequest("https://shrine-realpython-example-app.herokuapp.com/getPlayerResults?playerId=548", updateGameResultsTable)
     }
 
     function updateGameResultsTable(tableData) {
         console.log('inside updateGameResultsTable!')
         console.log('tableData: ' + tableData)
+        console.log('tableData.length: ' + tableData.length)
+        for (var i = 0; i < apiResponse.length; i++){
+            //document.write("<br><br>array index: " + i);
+            var obj = arr[i];
+            for (var key in obj){
+                var value = obj[key];
+                console.log('key: ' + key)
+                console.log('value: ' + value)
+                //document.write("<br> - " + key + ": " + value);
+            }
+        }
     }
 
     function getFirst50GameResults() {
-        apiResponse = makeBackendAPIRequest("https://shrine-realpython-example-app.herokuapp.com/getPlayerResults?playerId=548", updateGameResultsTable)
-        if (apiResponse != false){
-            console.log('apiResponse: ' + apiResponse)
-            console.log('***********')
-            console.log('apiResponse.length: ' + apiResponse.length)
-            for (var i = 0; i < apiResponse.length; i++){
-                //document.write("<br><br>array index: " + i);
-                var obj = arr[i];
-                for (var key in obj){
-                    var value = obj[key];
-                    console.log('key: ' + key)
-                    console.log('value: ' + value)
-                    //document.write("<br> - " + key + ": " + value);
-                }
-            }
-        }
+        makeBackendAPIRequest("https://shrine-realpython-example-app.herokuapp.com/getPlayerResults?playerId=548", updateGameResultsTable)
     }
 </script>
 </head>
