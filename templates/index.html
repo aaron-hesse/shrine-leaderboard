@@ -24,8 +24,17 @@
         makeBackendAPIRequest("https://shrine-realpython-example-app.herokuapp.com/getPlayerResults?playerId=548", updateGameResultsTable)
     }
 
+    function emptyGameResultsTable() {
+        var table = document.getElementById('resultsTable');
+        var rowCount = table.rows.length;
+        // 0 or 1 ?
+        for (var i = 0; i < rowCount; i++) {
+            table.deleteRow(i);
+        }
+    }
+
     function updateGameResultsTable(tableData) {
-        document.getElementById('resultsTable').remove();
+        document.getElementById('resultsTable')
         console.log('inside updateGameResultsTable!')
         console.log('tableData: ' + tableData)
         console.log('tableData.length: ' + tableData.length)
