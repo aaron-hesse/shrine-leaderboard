@@ -20,7 +20,6 @@ def index():
 # add support for GET and POST or figure out which one to use the most?
 # figure out how to add authentication for the endpoints
 # look into serverless tech
-# add some frontend for tables of information.
 
 @app.route("/recordGameResults")
 def recordGameResults():
@@ -43,6 +42,28 @@ def recordGameResults():
         player2Id=player2_id,
         winningPlayerId=winning_player_id
     )
+
+@app.route("/getFirst50GameResults")    
+def getFirst50GameResults():
+
+    first_fifty_game_records = []
+
+    try:
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM gameRecords LIMIT 50")
+        game_records = cur.fetchall()
+    except:
+        return "Unable to retrieve game data for that gameId."
+    
+    for gameR in game_records:
+        game = {}
+        game['gameid'] = str(gameR[0])
+        game['player1id'] = str(gameR[1])
+        game['player2id'] = str(gameR[2])
+        game['winningplayerid'] = str(gameR[3])
+        first_fifty_game_records.append(game)
+    
+    return jsonify(first_fifty_game_records)
 
 @app.route("/getGameResults")
 def getGameResults():

@@ -2,22 +2,50 @@
 
 <head>
 <script>
-    let request = new HMLHttpRequest();
-    request.open("GET", "https://https://shrine-realpython-example-app.herokuapp.com/getPlayerResults?playerId=548")
-    request.send();
-    request.onload = () => {
-        console.log(request);
-        if (request.status === 200){
-            console.log(JSON.parse(request.response))
-        } else {
-            console.log(`error ${request.status} ${request.statusText}`)
+
+    function makeBackendAPIRequest(url) {
+        let request = new HMLHttpRequest();
+        request.open("GET", url)
+        request.send();
+        request.onload = () => {
+            console.log(request);
+            if (request.status === 200){
+                console.log(JSON.parse(request.response))
+                return request.response
+            } else {
+                console.log(`error ${request.status} ${request.statusText}`)
+                return false
+            }
+        }
+    }
+
+    function getPlayerResults(playerId) {
+        apiResponse = makeBackendAPIRequest("https://https://shrine-realpython-example-app.herokuapp.com/getPlayerResults?playerId=548")
+        if (apiResponse){
+            console.log('apiResponse: ' + apiResponse)
+            // update the front-end table results
+        }
+    }
+
+    function getFirst50GameResults() {
+        apiResponse = makeBackendAPIRequest("https://https://shrine-realpython-example-app.herokuapp.com/getPlayerResults?playerId=548")
+        if (apiResponse){
+            console.log('apiResponse: ' + apiResponse)
+            // update the front-end table results
         }
     }
 </script>
 </head>
 
 <body>
-This is the body of the page.
+Show Global Leaderboards<br/>
+Show Player 1 Results<br/>
+Show Player 2 Results<br/>
+
+<table id="resultsTable">
+
+</table>
+
 </body>
 
 </html>
