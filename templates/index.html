@@ -3,7 +3,7 @@
 <head>
 <script>
 
-    function makeBackendAPIRequest(url) {
+    function makeBackendAPIRequest(url, callback) {
         let request = new XMLHttpRequest();
         request.open("GET", url)
         request.send();
@@ -12,7 +12,7 @@
             if (request.status === 200){
                 parsedJSON = JSON.parse(request.response) 
                 console.log(parsedJSON)
-                return parsedJSON
+                callback(parsedJSON)
             } else {
                 console.log(`error ${request.status} ${request.statusText}`)
                 return false
@@ -21,7 +21,7 @@
     }
 
     function getPlayerResults(playerId) {
-        apiResponse = makeBackendAPIRequest("https://shrine-realpython-example-app.herokuapp.com/getPlayerResults?playerId=548")
+        apiResponse = makeBackendAPIRequest("https://shrine-realpython-example-app.herokuapp.com/getPlayerResults?playerId=548", updateGameResultsTable)
         if (apiResponse){
             console.log('apiResponse: ' + apiResponse)
             // update the front-end table results
@@ -29,8 +29,13 @@
         }
     }
 
+    function updateGameResultsTable(tableData) {
+        console.log('inside updateGameResultsTable!')
+        console.log('tableData: ' + tableData)
+    }
+
     function getFirst50GameResults() {
-        apiResponse = makeBackendAPIRequest("https://shrine-realpython-example-app.herokuapp.com/getPlayerResults?playerId=548")
+        apiResponse = makeBackendAPIRequest("https://shrine-realpython-example-app.herokuapp.com/getPlayerResults?playerId=548", updateGameResultsTable)
         if (apiResponse != false){
             console.log('apiResponse: ' + apiResponse)
             console.log('***********')
