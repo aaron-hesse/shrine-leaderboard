@@ -14,7 +14,7 @@ app.config["JSONIFY_PRETTYPRINT_REGULAR"] = True
 
 @app.route("/")
 def index():
-    return app.send_static_file('index.html')
+    return app.send_static_file('/index.html')
 
 # add support for GET and POST or figure out which one to use the most?
 # figure out how to add authentication for the endpoints
