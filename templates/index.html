@@ -3,10 +3,8 @@
 <head>
 <script>
 
-    var XMLHttpRequest = require('xhr2');
-
     function makeBackendAPIRequest(url) {
-        let request = new HMLHttpRequest();
+        let request = new XMLHttpRequest();
         request.open("GET", url)
         request.send();
         request.onload = () => {
