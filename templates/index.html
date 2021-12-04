@@ -31,28 +31,24 @@
         for (var i = 1; i < rowCount; i++) {
             console.log('i: ' + i)
             table.deleteRow(i);
-            rowCount = table.rows.length;
         }
     }
 
     function updateGameResultsTable(tableData) {
         // is there a race condition for emptying the table, and maybe its trying to empty it at the same time its being populated?
+        // figure out how to empty the game results table properly.
         emptyGameResultsTable()
         console.log('inside updateGameResultsTable!')
         console.log('tableData: ' + tableData)
         console.log('tableData.length: ' + tableData.length)
-        for (var i = 0; i < tableData.length; i++){
+        for (var i = 0; i < tableData.length; i++) {
             var obj = tableData[i];
             var newRow = document.getElementById('resultsTable').insertRow();
-            var newCells = ""
-            for (var key in obj){
+            for (var key in obj) {
                 var value = obj[key];
-                console.log('key: ' + key)
-                console.log('value: ' + value)
-                newCells += "<td>" + value + "</td>"
+                newRow.innerHTML += "<td>" + value + "</td>"
             }
-            console.log('newCells: ' + newCells)
-            newRow.innerHTML = newCells
+            
         }
     }
 
