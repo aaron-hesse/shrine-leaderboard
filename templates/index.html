@@ -21,6 +21,7 @@
     }
 
     function getPlayerResults(playerId) {
+        emptyGameResultsTable()
         makeBackendAPIRequest("https://shrine-realpython-example-app.herokuapp.com/getPlayerResults?playerId=548", updateGameResultsTable)
     }
 
@@ -35,7 +36,6 @@
     }
 
     function updateGameResultsTable(tableData) {
-        emptyGameResultsTable()
         console.log('inside updateGameResultsTable!')
         console.log('tableData: ' + tableData)
         console.log('tableData.length: ' + tableData.length)
@@ -55,6 +55,7 @@
     }
 
     function getFirst50GameResults() {
+        emptyGameResultsTable()
         makeBackendAPIRequest("https://shrine-realpython-example-app.herokuapp.com/getPlayerResults?playerId=548", updateGameResultsTable)
     }
 </script>
