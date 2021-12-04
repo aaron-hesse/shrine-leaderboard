@@ -32,6 +32,7 @@
         apiResponse = makeBackendAPIRequest("https://shrine-realpython-example-app.herokuapp.com/getPlayerResults?playerId=548")
         if (apiResponse){
             console.log('apiResponse: ' + apiResponse)
+            console.log('***********')
             console.log('apiResponse.length: ' + apiResponse.length)
             for (var i = 0; i < apiResponse.length; i++){
                 //document.write("<br><br>array index: " + i);
@@ -58,7 +59,7 @@
 <br/>
 <br/>
 
-<table id="resultsTable">
+<table id="resultsTable" border="1">
     
   <tr>
       <th>GameId</th>
