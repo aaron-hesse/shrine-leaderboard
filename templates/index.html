@@ -29,14 +29,18 @@
         console.log('tableData: ' + tableData)
         console.log('tableData.length: ' + tableData.length)
         for (var i = 0; i < tableData.length; i++){
-            //document.write("<br><br>array index: " + i);
             var obj = tableData[i];
+            var newRow = document.getElementById('resultsTable').insertRow();
+            var newCells = ""
             for (var key in obj){
                 var value = obj[key];
                 console.log('key: ' + key)
                 console.log('value: ' + value)
                 //document.write("<br> - " + key + ": " + value);
+                newCells += "<td>" + value + "</td>"
             }
+            console.log('newCells: ' + newCells)
+            newRow.innerHTML = newCells
         }
     }
 
