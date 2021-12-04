@@ -1,5 +1,6 @@
 from flask import Flask
 from flask import request
+from flask import render_template
 from flask import jsonify
 
 import os
@@ -14,7 +15,7 @@ app.config["JSONIFY_PRETTYPRINT_REGULAR"] = True
 
 @app.route("/")
 def index():
-    return app.send_static_file('/index.html')
+    return render_template('index.html')
 
 # add support for GET and POST or figure out which one to use the most?
 # figure out how to add authentication for the endpoints
