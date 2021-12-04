@@ -10,8 +10,9 @@
         request.onload = () => {
             console.log(request);
             if (request.status === 200){
-                console.log(JSON.parse(request.response))
-                return request.response
+                parsedJSON = JSON.parse(request.response) 
+                console.log(parsedJSON)
+                return parsedJSON
             } else {
                 console.log(`error ${request.status} ${request.statusText}`)
                 return false
