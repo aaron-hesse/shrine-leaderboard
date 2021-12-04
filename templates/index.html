@@ -30,7 +30,7 @@
 
     function getFirst50GameResults() {
         apiResponse = makeBackendAPIRequest("https://shrine-realpython-example-app.herokuapp.com/getPlayerResults?playerId=548")
-        if (apiResponse){
+        if (apiResponse != false){
             console.log('apiResponse: ' + apiResponse)
             console.log('***********')
             console.log('apiResponse.length: ' + apiResponse.length)
