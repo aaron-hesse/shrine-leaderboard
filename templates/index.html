@@ -34,7 +34,7 @@
     }
 
     function updateGameResultsTable(tableData) {
-        document.getElementById('resultsTable')
+        emptyGameResultsTable()
         console.log('inside updateGameResultsTable!')
         console.log('tableData: ' + tableData)
         console.log('tableData.length: ' + tableData.length)
@@ -46,7 +46,6 @@
                 var value = obj[key];
                 console.log('key: ' + key)
                 console.log('value: ' + value)
-                //document.write("<br> - " + key + ": " + value);
                 newCells += "<td>" + value + "</td>"
             }
             console.log('newCells: ' + newCells)
