@@ -27,7 +27,7 @@
     function emptyGameResultsTable() {
         var table = document.getElementById('resultsTable');
         var rowCount = table.rows.length;
-        // 0 or 1 ?
+        console.log('rowCount: ' + rowCount)
         for (var i = 1; i < rowCount; i++) {
             table.deleteRow(i);
         }
