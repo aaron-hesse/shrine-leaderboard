@@ -56,7 +56,7 @@ def getTop50Players():
     except:
         return "Unable to retrieve data for top 50 players."
 
-    return jsonify(top_fifty_players)
+    return top_fifty_players
 
 
 @app.route("/getFirst50GameResults")    
