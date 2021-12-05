@@ -91,8 +91,11 @@ def getFirst50GameResults():
         #playerWinRatioDict[player1id] = playerGameCountDict[player1id] / playerWinCountDict[player1id]
         #playerWinRatioDict[player2id] = playerWinRatioDict[player2id] / playerWinCountDict[player2id]
 
-        player1WinRatio = playerGameCountDict[player1id] / playerWinCountDict[player1id]
-        player2WinRatio = playerWinRatioDict[player2id] / playerWinCountDict[player2id]
+        if playerWinCountDict[player1id] != 0:
+            player1WinRatio = playerGameCountDict[player1id] / playerWinCountDict[player1id]
+
+        if playerWinCountDict[player2id] != 0:
+            player2WinRatio = playerWinRatioDict[player2id] / playerWinCountDict[player2id]
 
         print('player1WinRatio: ' + player1WinRatio)
         print('player2WinRatio: ' + player2WinRatio)
