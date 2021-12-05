@@ -4,7 +4,6 @@
 <script>
 
     function onBodyLoad() {
-        console.log('in onBodyLoad')
         hideGameResultsTable();
         hidePlayerTable();
     }
@@ -37,11 +36,8 @@
     function emptyTable(tableName) {
         var table = document.getElementById(tableName);
         var rowCount = table.rows.length;
-        console.log('rowCount: ' + rowCount)
         var rowIndex = 1;
         for (var i = rowIndex; i < rowCount; i++) {
-            console.log('i: ' + i)
-            console.log('rowIndex: ' + rowIndex)
             table.deleteRow(rowIndex);
         }
     }
@@ -55,25 +51,23 @@
     }
 
     function hideGameResultsTable() {
-        console.log('in hideGameResultsTable')
         gameResultsTable = document.getElementById('gameResultsTable')
-        gameResultsTable.style.display = 'none'
+        gameResultsTable.style.visibility = 'hidden'
     }
 
     function showGameResultsTable() {
         gameResultsTable = document.getElementById('gameResultsTable')
-        gameResultsTable.style.display = 'initial'
+        gameResultsTable.style.visibility = 'visible'
     }
 
     function showPlayerTable() {
         gameResultsTable = document.getElementById('playerTable')
-        gameResultsTable.style.display = 'initial'
+        gameResultsTable.style.visibility = 'visible'
     }
 
     function hidePlayerTable() {
-        console.log('in hidePlayerTable')
         gameResultsTable = document.getElementById('playerTable')
-        gameResultsTable.style.display = 'none'
+        gameResultsTable.style.visibility = 'hidden'
     }    
 
     function updatePlayerTable(tableData) {
