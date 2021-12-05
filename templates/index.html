@@ -94,9 +94,8 @@
             //    var value = obj[key]
             //    console.log('key: ' + key)
             //})
-            dict_values = obj.values()
-            value_iterator = iter(values_view)
-            first_value = next(value_iterator)
+            first_value = list(obj.values())[0]
+            
 
             newRowCode += "<td>" + rank + "</td><td>" + first_value + "</td>"
             newRow.innerHTML = newRowCode;
