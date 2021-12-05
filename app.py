@@ -108,7 +108,7 @@ def getAllPlayers():
     for row in all_player_ids:
         for id in row:
             player_id = {}
-            player_id['id'] = id[0]
+            player_id['id'] = id
             player_ids.append(player_id)
     
     return jsonify(player_ids)
