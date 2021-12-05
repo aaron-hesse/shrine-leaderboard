@@ -97,6 +97,8 @@
             var newRow = document.getElementById('gameResultsTable').insertRow();
             for (var key in obj) {
                 var value = obj[key];
+                console.log('key: ' + key)
+                console.log('value: ' + value)
                 newRow.innerHTML += "<td>" + value + "</td>"
             }
         }
