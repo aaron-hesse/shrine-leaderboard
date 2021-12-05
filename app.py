@@ -59,7 +59,7 @@ def getTop50Players():
     playerRankData = {}
     for playerRank in top_fifty_players:
         playerRankData['playerid'] = playerRank[0]
-        playerRankData['winpercentage'] = playerRank[1]
+        playerRankData['winpercentage'] = float(playerRank[1])
 
     return jsonify(playerRankData)
 
