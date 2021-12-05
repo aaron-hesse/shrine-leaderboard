@@ -73,8 +73,8 @@
     function updatePlayerTable(tableData) {
 
         emptyPlayerTable()
-        hideGameResultsTable()
-        showPlayerTable()
+        //hideGameResultsTable()
+        //showPlayerTable()
 
         // The JSON object returned by getAllPlayers is simply an array, there's no key->value mapping
 
@@ -89,8 +89,8 @@
     function updateGameResultsTable(tableData) {
 
         emptyGameResultsTable()
-        hidePlayerTable()
-        showGameResultsTable()
+        //hidePlayerTable()
+        //showGameResultsTable()
 
         for (var i = 0; i < tableData.length; i++) {
             var obj = tableData[i];
@@ -141,6 +141,10 @@
 <br/>
 <br/>
 
+List of Games
+<br/>
+<br/>
+
 <table id="gameResultsTable" border="1" padding="5px">
     
   <tr>
@@ -155,6 +159,10 @@
 <br/>
 <br/>
 
+List of Players
+<br/>
+<br/>
+
 <table id="playerTable" border="1" padding="5px">
     
     <tr>
@@ -162,6 +170,10 @@
     </tr>
   
 </table>
+
+Top Players
+<br/>
+<br/>
 
 <table id="top50PlayerTable" border="1" padding="5px">
     
