@@ -57,7 +57,8 @@ def getTop50Players():
         return "Unable to retrieve data for top 50 players."
 
     for playerRank in top_fifty_players:
-        print('playerRankObject: ' + playerRank)
+        for entry in playerRank:
+            print('playerRankObject: ' + entry)
 
     return "testing"
 
