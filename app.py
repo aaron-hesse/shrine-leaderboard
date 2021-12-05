@@ -56,7 +56,10 @@ def getTop50Players():
     except:
         return "Unable to retrieve data for top 50 players."
 
-    return top_fifty_players
+    for playerRank in top_fifty_players:
+        console.log('playerRankObject: ' + playerRank)
+
+    return "testing"
 
 
 @app.route("/getFirst50GameResults")    
