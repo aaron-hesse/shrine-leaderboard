@@ -95,11 +95,10 @@
         for (var i = 0; i < tableData.length; i++) {
             var obj = tableData[i];
             var newRow = document.getElementById('gameResultsTable').insertRow();
-            newRow.innerHTML += "<td>" + obj['gameid'] + "</td>"
-            newRow.innerHTML += "<td>" + obj['player1id'] + "</td>"
-            newRow.innerHTML += "<td>" + obj['player2id'] + "</td>"
-            newRow.innerHTML += "<td>" + obj['winningPlayerid'] + "</td>"
-            newRow.innerHTML += "<td>" + obj['winningPlayerWinRatio'] + "</td>"
+            for (var key in obj) {
+                var value = obj[key];
+                newRow.innerHTML += "<td>" + value + "</td>"
+            }
         }
     }
 
@@ -125,7 +124,7 @@
       <th>Player1Id</th>
       <th>Player2Id</th>
       <th>WinningPlayerId</th>
-      <th>Winner WinRatio</th>
+      <th>Winner WinPercent</th>
   </tr>
 
 </table>
