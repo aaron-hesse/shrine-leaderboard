@@ -12,7 +12,6 @@
             if (request.status === 200){
                 parsedJSON = JSON.parse(request.response) 
                 console.log(parsedJSON)
-                emptyGameResultsTable()
                 callback(parsedJSON)
             } else {
                 console.log(`error ${request.status} ${request.statusText}`)
@@ -44,6 +43,8 @@
         console.log('inside updateGameResultsTable!')
         console.log('tableData: ' + tableData)
         console.log('tableData.length: ' + tableData.length)
+
+        emptyGameResultsTable()
 
         for (var i = 0; i < tableData.length; i++) {
             var obj = tableData[i];
