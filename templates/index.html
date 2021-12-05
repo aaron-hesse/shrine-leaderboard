@@ -12,6 +12,7 @@
             if (request.status === 200){
                 parsedJSON = JSON.parse(request.response) 
                 console.log(parsedJSON)
+                emptyGameResultsTable()
                 callback(parsedJSON)
             } else {
                 console.log(`error ${request.status} ${request.statusText}`)
@@ -24,25 +25,14 @@
         makeBackendAPIRequest("https://shrine-realpython-example-app.herokuapp.com/getPlayerResults?playerId=548", updateGameResultsTable)
     }
 
-    function emptyGameResultsTable(tableData, callback) {
+    function emptyGameResultsTable() {
+        console.log('emptying game results table...')
         var table = document.getElementById('resultsTable');
         var rowCount = table.rows.length;
         console.log('rowCount: ' + rowCount)
         for (var i = 1; i < rowCount; i++) {
             console.log('i: ' + i)
             table.deleteRow(i);
-        }
-        callback()
-    }
-
-    function addDataToGameResultsTable() {
-        for (var i = 0; i < tableData.length; i++) {
-            var obj = tableData[i];
-            var newRow = document.getElementById('resultsTable').insertRow();
-            for (var key in obj) {
-                var value = obj[key];
-                newRow.innerHTML += "<td>" + value + "</td>"
-            }
         }
     }
 
@@ -52,7 +42,16 @@
         console.log('inside updateGameResultsTable!')
         console.log('tableData: ' + tableData)
         console.log('tableData.length: ' + tableData.length)
-        emptyGameResultsTable(tableData, addDataToGameResultsTable)
+
+        for (var i = 0; i < tableData.length; i++) {
+            var obj = tableData[i];
+            var newRow = document.getElementById('resultsTable').insertRow();
+            for (var key in obj) {
+                var value = obj[key];
+                newRow.innerHTML += "<td>" + value + "</td>"
+            }
+            
+        }
     }
 
     function getFirst50GameResults() {
