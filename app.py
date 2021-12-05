@@ -2,8 +2,6 @@ from flask import Flask
 from flask import request
 from flask import render_template
 from flask import jsonify
-from elopy import *
-
 
 import os
 import psycopg2
