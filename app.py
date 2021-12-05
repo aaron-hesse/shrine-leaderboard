@@ -56,11 +56,12 @@ def getTop50Players():
     except:
         return "Unable to retrieve data for top 50 players."
 
+    playerRankData = {}
     for playerRank in top_fifty_players:
-        for entry in playerRank:
-            print('playerRankObject: ' + str(entry))
+        playerRankData['playerid'] = playerRank[0]
+        playerRankData['winpercentage'] = playerRank[1]
 
-    return "testing"
+    return jsonify(playerRankData)
 
 
 @app.route("/getFirst50GameResults")    
