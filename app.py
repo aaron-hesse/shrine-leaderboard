@@ -105,11 +105,11 @@ def getAllPlayers():
     if not all_player_ids:
        return "Could not find any records for any players."
     
-    for row in player_ids:
+    for row in all_player_ids:
        player_ids.append(row[0])
        player_ids.append(row[1])
     
-    return jsonify(all_player_ids)
+    return jsonify(player_ids)
 
 @app.route("/getPlayerResults")
 def getPlayerResults():
