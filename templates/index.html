@@ -57,23 +57,23 @@
     function hideGameResultsTable() {
         console.log('in hideGameResultsTable')
         gameResultsTable = document.getElementById('gameResultsTable')
-        gameResultsTable.style.visibility = 'hidden'
+        gameResultsTable.style.display = 'none'
     }
 
     function showGameResultsTable() {
         gameResultsTable = document.getElementById('gameResultsTable')
-        gameResultsTable.style.visibility = 'visible'
+        gameResultsTable.style.display = 'initial'
     }
 
     function showPlayerTable() {
         gameResultsTable = document.getElementById('playerTable')
-        gameResultsTable.style.visibility = 'visible'
+        gameResultsTable.style.display = 'initial'
     }
 
     function hidePlayerTable() {
         console.log('in hidePlayerTable')
         gameResultsTable = document.getElementById('playerTable')
-        gameResultsTable.style.visibility = 'hidden'
+        gameResultsTable.style.display = 'none'
     }    
 
     function updatePlayerTable(tableData) {
