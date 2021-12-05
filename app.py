@@ -97,7 +97,7 @@ def getAllPlayers():
 
     try:
         cur = conn.cursor()
-        cur.execute("SELECT player1id,player2id FROM gameRecords")
+        cur.execute("SELECT DISTINCT player1id,player2id FROM gameRecords")
         all_player_ids = cur.fetchall()
     except:
         return "Unable to retrieve all playerIds."
