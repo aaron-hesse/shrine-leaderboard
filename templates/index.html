@@ -66,6 +66,7 @@
 
     function updatePlayerTable(tableData) {
 
+        hideGameResultsTable()
         showPlayerTable()
 
         for (var i = 0; i < tableData.length; i++) {
@@ -81,6 +82,7 @@
     function updateGameResultsTable(tableData) {
 
         emptyGameResultsTable()
+        hidePlayerTable()
         showGameResultsTable()
 
         for (var i = 0; i < tableData.length; i++) {
