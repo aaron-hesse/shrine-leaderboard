@@ -51,7 +51,7 @@ def getTop50Players():
 
     try:
         cur = conn.cursor()
-        cur.execute("SELECT * FROM playerRanks LIMIT 50 ORDER BY winpercent DESC")
+        cur.execute("SELECT * FROM playerRanks ORDER BY winpercent DESC LIMIT 50")
         top_fifty_players = cur.fetchall()
     except:
         return "Unable to retrieve data for top 50 players."
@@ -78,7 +78,6 @@ def getFirst50GameResults():
         game['player1id'] = str(gameR[1])
         game['player2id'] = str(gameR[2])
         game['winningPlayerid'] = str(gameR[3])
-        #game['winningPlayerWinPercent'] = "{:.0%}".format(playerWinPercentDict[str(gameR[3])])
 
         first_fifty_game_records.append(game)
 
