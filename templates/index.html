@@ -38,8 +38,7 @@
     }
 
     function updateGameResultsTable(tableData) {
-        // is there a race condition for emptying the table, and maybe its trying to empty it at the same time its being populated?
-        // figure out how to empty the game results table properly.
+
         console.log('inside updateGameResultsTable!')
         console.log('tableData: ' + tableData)
         console.log('tableData.length: ' + tableData.length)
@@ -58,7 +57,7 @@
     }
 
     function getFirst50GameResults() {
-        makeBackendAPIRequest("https://shrine-realpython-example-app.herokuapp.com/getPlayerResults?playerId=548", updateGameResultsTable)
+        makeBackendAPIRequest("https://shrine-realpython-example-app.herokuapp.com/getFirst50GameResults", updateGameResultsTable)
     }
 </script>
 </head>
