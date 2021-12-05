@@ -49,12 +49,12 @@ def getFirst50GameResults():
 
     first_fifty_game_records = []
 
-    try:
+    #try:
         cur = conn.cursor()
         cur.execute("SELECT * FROM gameRecords LIMIT 50")
         game_records = cur.fetchall()
-    except:
-        return "Unable to retrieve game data for that gameId."
+    #except:
+    #    return "Unable to retrieve game data for first 50 games."
     
     for gameR in game_records:
         game = {}
