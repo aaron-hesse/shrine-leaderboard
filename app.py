@@ -2,10 +2,11 @@ from flask import Flask
 from flask import request
 from flask import render_template
 from flask import jsonify
+from elopy import *
+
 
 import os
 import psycopg2
-import elopy
 
 DATABASE_URL = os.environ['DATABASE_URL']
 
@@ -55,25 +56,59 @@ def getFirst50GameResults():
     game_records = cur.fetchall()
     #except:
     #    return "Unable to retrieve game data for first 50 games."
+
+    # compute the w/l ratio as a basic measure for determining rank
+    # iterate over rows
+    # use a dict to store playerid->winratio
+    # winRatio is #of games / #of wins
+    # two dicts? one for # of games
+    # one for # of wins
+    # then use them to computer win ratio
+
+    playerGameCountDict = {}
+    playerWinCountDict = {}
+    playerWinRatioDict = {}
     
     for gameR in game_records:
 
-        player1       = str(gameR[1])
-        player2       = str(gameR[2])
-        winningPlayer = str(gameR[3])
+        player1id = str(gameR[1])
+        player2id = str(gameR[2])
+        winningPlayerId = str(gameR[3])
 
-        elopyInstance = elopy.Implementation()
-        elopyInstance.addPlayer(player1)
-        elopyInstance.addPlayer(player2)
-        elopyInstance.recordMatch(player1, player2, winner=winningPlayer)
-        
+        if player1id in playerGameCountDict:
+            playerGameCountDict[player1id] += 1
+        else:
+            playerGameCountDict[player1id] = 0
+
+        if player2id in playerGameCountDict:
+            playerGameCountDict[player2id] += 1
+        else:
+            playerGameCountDict[player2id] = 0
+
+        if winningPlayerId in playerWinCountDict:
+            playerWinCountDict[winningPlayerId] += 1
+        else:
+            playerWinCountDict[winningPlayerId] = 0
+
+        #playerWinRatioDict[player1id] = playerGameCountDict[player1id] / playerWinCountDict[player1id]
+        #playerWinRatioDict[player2id] = playerWinRatioDict[player2id] / playerWinCountDict[player2id]
+
+        player1WinRatio = playerGameCountDict[player1id] / playerWinCountDict[player1id]
+        player2WinRatio = playerWinRatioDict[player2id] / playerWinCountDict[player2id]
+
+        print('player1WinRatio: ' + player1WinRatio)
+        print('player2WinRatio: ' + player2WinRatio)
+
         game = {}
         game['gameid'] = str(gameR[0])
         game['player1id'] = str(gameR[1])
         game['player2id'] = str(gameR[2])
         game['winningplayerid'] = str(gameR[3])
+
         first_fifty_game_records.append(game)
     
+
+
     return jsonify(first_fifty_game_records)
 
 @app.route("/getGameResults")
