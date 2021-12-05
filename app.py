@@ -135,12 +135,12 @@ def computePlayerRankings():
     
     all_game_records = []
 
-    try:
+    #try:
         cur = conn.cursor()
         cur.execute("SELECT * FROM gameRecords")
         all_game_records = cur.fetchall()
-    except:
-        return "Unable to retrieve data from gameRecords."
+    #except:
+    #    return "Unable to retrieve data from gameRecords."
 
     # compute related information
 
