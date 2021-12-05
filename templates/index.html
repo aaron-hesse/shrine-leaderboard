@@ -24,8 +24,12 @@
         makeBackendAPIRequest("https://shrine-realpython-example-app.herokuapp.com/getPlayerResults?playerId=548", updateGameResultsTable)
     }
 
+    function getAllPlayers() {
+        makeBackendAPIRequest("https://shrine-realpython-example-app.herokuapp.com/getAllPlayers", updatePlayerTable)
+    }
+
     function emptyGameResultsTable() {
-        var table = document.getElementById('resultsTable');
+        var table = document.getElementById('gameResultsTable');
         var rowCount = table.rows.length;
         console.log('rowCount: ' + rowCount)
         var rowIndex = 1;
@@ -36,18 +40,34 @@
         }
     }
 
+    function hideGameResultsTable() {
+        gameResultsTable = document.getElementById('gameResultsTable')
+        gameResultsTable.style.display = 'none'
+    }
+
+    function updatePlayerTable() {
+//playerTable
+        for (var i = 0; i < tableData.length; i++) {
+            var obj = tableData[i];
+            var newRow = document.getElementById('playerTable').insertRow();
+            for (var key in obj) {
+                var value = obj[key];
+                newRow.innerHTML += "<td>" + value + "</td>"
+            }
+        }
+    }
+
     function updateGameResultsTable(tableData) {
 
         emptyGameResultsTable()
 
         for (var i = 0; i < tableData.length; i++) {
             var obj = tableData[i];
-            var newRow = document.getElementById('resultsTable').insertRow();
+            var newRow = document.getElementById('gameResultsTable').insertRow();
             for (var key in obj) {
                 var value = obj[key];
                 newRow.innerHTML += "<td>" + value + "</td>"
             }
-            
         }
     }
 
@@ -60,14 +80,13 @@
 <body>
 
 <a href="javascript:" onclick="getFirst50GameResults()">Show Global Leaderboards</a> |
-<a href="javascript:" onclick="getPlayerResults(548)">Show Player 1 Results</a> |
-<a href="javascript:" onclick="getPlayerResults(9887)">Show Player 2 Results</a>
-    
+<a href="javascript:" onclick="getAllPlayers()">Show All Players</a>
+
 <br/>
 <br/>
 <br/>
 
-<table id="resultsTable" border="1" padding="5px">
+<table id="gameResultsTable" border="1" padding="5px">
     
   <tr>
       <th>GameId</th>
@@ -76,8 +95,14 @@
       <th>WinningPlayerId</th>
   </tr>
 
+</table>
 
-
+<table id="playerTable" border="1" padding="5px">
+    
+    <tr>
+        <th>PlayerId</th>
+    </tr>
+  
 </table>
 
 </body>
