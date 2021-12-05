@@ -116,10 +116,7 @@ def getFirst50GameResults():
         game['player2id'] = str(gameR[2])
         game['winningPlayerid'] = str(gameR[3])
 
-        percentNumberStr = playerWinRatioDict[str(gameR[3])]
-        percentageStr = "{:.0%}".format(percentNumberStr)
-
-        game['winningPlayerWinPercent'] = percentageStr
+        game['winningPlayerWinPercent'] = "{:.0%}".format(playerWinRatioDict[str(gameR[3])])
 
         first_fifty_game_records.append(game)
     
