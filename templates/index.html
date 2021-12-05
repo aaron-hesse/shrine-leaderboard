@@ -32,8 +32,8 @@
         makeBackendAPIRequest("https://shrine-realpython-example-app.herokuapp.com/getAllPlayers", updatePlayerTable)
     }
 
-    function emptyGameResultsTable() {
-        var table = document.getElementById('gameResultsTable');
+    function emptyTable(tableName) {
+        var table = document.getElementById(tableName);
         var rowCount = table.rows.length;
         console.log('rowCount: ' + rowCount)
         var rowIndex = 1;
@@ -42,6 +42,14 @@
             console.log('rowIndex: ' + rowIndex)
             table.deleteRow(rowIndex);
         }
+    }
+
+    function emptyPlayerTable() {
+        emptyTable('playerTable')
+    }
+
+    function emptyGameRecordsTable() {
+        emptyTable('gameResultsTable')
     }
 
     function hideGameResultsTable() {
@@ -66,6 +74,7 @@
 
     function updatePlayerTable(tableData) {
 
+        emptyPlayerTable()
         hideGameResultsTable()
         showPlayerTable()
 
@@ -120,6 +129,9 @@
   </tr>
 
 </table>
+
+<br/>
+<br/>
 
 <table id="playerTable" border="1" padding="5px">
     
