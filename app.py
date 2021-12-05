@@ -51,7 +51,7 @@ def getTop50Players():
 
     try:
         cur = conn.cursor()
-        cur.execute("SELECT * FROM playerRanks LIMIT 50 ORDER BY playerRank DESC")
+        cur.execute("SELECT * FROM playerRanks LIMIT 50 ORDER BY winpercent DESC")
         top_fifty_players = cur.fetchall()
     except:
         return "Unable to retrieve data for top 50 players."
