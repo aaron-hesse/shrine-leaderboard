@@ -83,16 +83,22 @@
         
         var rank = 1
         for (var i = 0; i < tableData.length; i++) {
+
             var obj = tableData[i];
             var newRow = document.getElementById('top50PlayerTable').insertRow();
-            console.log('obj: ' + obj)
             var newRowCode = ""
-            Object.keys(obj).forEach(function (key) { 
-                var value = obj[key]
-                console.log('key: ' + key)
-                console.log('value: ' + value)
-                newRowCode += "<td>" + rank + "</td><td>" + key + "</td>"
-            })
+
+            console.log('obj: ' + obj)
+            
+            //Object.keys(obj).forEach(function (key) { 
+            //    var value = obj[key]
+            //    console.log('key: ' + key)
+            //})
+            dict_values = a_dict.values()
+            value_iterator = iter(values_view)
+            first_value = next(value_iterator)
+
+            newRowCode += "<td>" + rank + "</td><td>" + first_value + "</td>"
             newRow.innerHTML = newRowCode;
             rank += 1
         }
