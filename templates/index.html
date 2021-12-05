@@ -30,9 +30,11 @@
         var table = document.getElementById('resultsTable');
         var rowCount = table.rows.length;
         console.log('rowCount: ' + rowCount)
-        for (var i = 1; i < rowCount; i++) {
+        var rowIndex = 1;
+        for (var i = rowIndex; i < rowCount; i++) {
             console.log('i: ' + i)
-            table.deleteRow(i);
+            console.log('rowIndex: ' + rowIndex)
+            table.deleteRow(rowIndex);
         }
     }
 
