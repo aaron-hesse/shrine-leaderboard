@@ -72,9 +72,12 @@
         for (var i = 0; i < tableData.length; i++) {
             var obj = tableData[i];
             var newRow = document.getElementById('playerTable').insertRow();
+            console.log('obj: ' + obj)
             for (var key in obj) {
                 var value = obj[key];
                 newRow.innerHTML += "<td>" + value + "</td>"
+                console.log('key: ' + key)
+                console.log('value: ' + value)
             }
         }
     }
