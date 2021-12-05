@@ -24,7 +24,7 @@
         makeBackendAPIRequest("https://shrine-realpython-example-app.herokuapp.com/getPlayerResults?playerId=548", updateGameResultsTable)
     }
 
-    function emptyGameResultsTable() {
+    function emptyGameResultsTable(tableData, callback) {
         var table = document.getElementById('resultsTable');
         var rowCount = table.rows.length;
         console.log('rowCount: ' + rowCount)
@@ -32,15 +32,10 @@
             console.log('i: ' + i)
             table.deleteRow(i);
         }
+        callback()
     }
 
-    function updateGameResultsTable(tableData) {
-        // is there a race condition for emptying the table, and maybe its trying to empty it at the same time its being populated?
-        // figure out how to empty the game results table properly.
-        emptyGameResultsTable()
-        console.log('inside updateGameResultsTable!')
-        console.log('tableData: ' + tableData)
-        console.log('tableData.length: ' + tableData.length)
+    function addDataToGameResultsTable() {
         for (var i = 0; i < tableData.length; i++) {
             var obj = tableData[i];
             var newRow = document.getElementById('resultsTable').insertRow();
@@ -48,8 +43,16 @@
                 var value = obj[key];
                 newRow.innerHTML += "<td>" + value + "</td>"
             }
-            
         }
+    }
+
+    function updateGameResultsTable(tableData) {
+        // is there a race condition for emptying the table, and maybe its trying to empty it at the same time its being populated?
+        // figure out how to empty the game results table properly.
+        console.log('inside updateGameResultsTable!')
+        console.log('tableData: ' + tableData)
+        console.log('tableData.length: ' + tableData.length)
+        emptyGameResultsTable(tableData, addDataToGameResultsTable)
     }
 
     function getFirst50GameResults() {
