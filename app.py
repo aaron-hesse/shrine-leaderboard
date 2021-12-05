@@ -104,10 +104,10 @@ def getFirst50GameResults():
             playerWinRatioDict[player2id] = 0
 
         print('player1id: ' + player1id)
-        print('player1WinRatio: ' + playerWinRatioDict[player1id])
+        print('player1WinRatio: ' + str(playerWinRatioDict[player1id]))
 
         print('player2id: ' + player2id)
-        print('player2WinRatio: ' + playerWinRatioDict[player2id])
+        print('player2WinRatio: ' + str(playerWinRatioDict[player2id]))
 
         game = {}
         game['gameid'] = str(gameR[0])
