@@ -4,6 +4,7 @@
 <script>
 
     function onBodyLoad() {
+        console.log('in onBodyLoad')
         hideGameResultsTable();
         hidePlayerTable();
     }
@@ -54,6 +55,7 @@
     }
 
     function hideGameResultsTable() {
+        console.log('in hideGameResultsTable')
         gameResultsTable = document.getElementById('gameResultsTable')
         gameResultsTable.style.visibility = 'hidden'
     }
@@ -69,6 +71,7 @@
     }
 
     function hidePlayerTable() {
+        console.log('in hidePlayerTable')
         gameResultsTable = document.getElementById('gameResultsTable')
         gameResultsTable.style.visibility = 'hidden'
     }    
