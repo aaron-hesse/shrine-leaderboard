@@ -102,7 +102,7 @@ def getAllPlayers():
     except:
         return "Unable to retrieve all playerIds."
 
-    if not player_ids:
+    if not all_player_ids:
        return "Could not find any records for any players."
     
     for id in player_ids:
