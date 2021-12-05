@@ -25,7 +25,6 @@
     }
 
     function emptyGameResultsTable() {
-        console.log('emptying game results table...')
         var table = document.getElementById('resultsTable');
         var rowCount = table.rows.length;
         console.log('rowCount: ' + rowCount)
@@ -38,10 +37,6 @@
     }
 
     function updateGameResultsTable(tableData) {
-
-        console.log('inside updateGameResultsTable!')
-        console.log('tableData: ' + tableData)
-        console.log('tableData.length: ' + tableData.length)
 
         emptyGameResultsTable()
 
