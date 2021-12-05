@@ -182,8 +182,13 @@ def computePlayerRankings():
         else:
             playerWinPercentDict[player2id] = 0
 
+    cur = conn.cursor()
+    cur.execute("INSERT INTO playerRanks (playerId, winPercentage) VALUES (%s,%s)", (player1_id, playerWinPercentDict[player1_id]))
+    cur.execute("INSERT INTO playerRanks (playerId, winPercentage) VALUES (%s,%s)", (player2_id, playerWinPercentDict[player2_id]))
+    conn.commit()
+
     return jsonify(playerWinPercentDict)
-    # write it into playerRanks table
+    
 
 @app.route("/getPlayerResults")
 def getPlayerResults():
