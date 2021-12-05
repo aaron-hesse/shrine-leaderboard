@@ -49,20 +49,12 @@ def getFirst50GameResults():
 
     first_fifty_game_records = []
 
-    #try:
-    cur = conn.cursor()
-    cur.execute("SELECT * FROM gameRecords LIMIT 50")
-    game_records = cur.fetchall()
-    #except:
-    #    return "Unable to retrieve game data for first 50 games."
-
-    # compute the w/l ratio as a basic measure for determining rank
-    # iterate over rows
-    # use a dict to store playerid->winratio
-    # winRatio is #of games / #of wins
-    # two dicts? one for # of games
-    # one for # of wins
-    # then use them to computer win ratio
+    try:
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM gameRecords LIMIT 50")
+        game_records = cur.fetchall()
+    except:
+        return "Unable to retrieve game data for first 50 games."
 
     playerGameCountDict = {}
     playerWinCountDict = {}
@@ -89,9 +81,6 @@ def getFirst50GameResults():
         else:
             playerWinCountDict[winningPlayerId] = 1
 
-        #playerWinRatioDict[player1id] = playerGameCountDict[player1id] / playerWinCountDict[player1id]
-        #playerWinRatioDict[player2id] = playerWinRatioDict[player2id] / playerWinCountDict[player2id]
-
         player1WinRatio = ""
         if player1id in playerWinCountDict:
             playerWinRatioDict[player1id] = playerWinCountDict[player1id] / playerGameCountDict[player1id]
@@ -104,23 +93,14 @@ def getFirst50GameResults():
         else:
             playerWinRatioDict[player2id] = 0
 
-        print('player1id: ' + player1id)
-        print('player1WinRatio: ' + str(playerWinRatioDict[player1id]))
-
-        print('player2id: ' + player2id)
-        print('player2WinRatio: ' + str(playerWinRatioDict[player2id]))
-
         game = {}
         game['gameid'] = str(gameR[0])
         game['player1id'] = str(gameR[1])
         game['player2id'] = str(gameR[2])
         game['winningPlayerid'] = str(gameR[3])
-
         game['winningPlayerWinPercent'] = "{:.0%}".format(playerWinRatioDict[str(gameR[3])])
 
         first_fifty_game_records.append(game)
-    
-
 
     return jsonify(first_fifty_game_records)
 
