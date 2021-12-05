@@ -89,6 +89,27 @@ def getGameResults():
         winningPlayerId=game_record[3]
     )
 
+@app.route("/getAllPlayers")
+def getAllPlayers():
+
+    player_ids = []
+    all_player_ids = None
+
+    try:
+        cur = conn.cursor()
+        cur.execute("SELECT player1id,player2id FROM gameRecords")
+        all_player_ids = cur.fetchall()
+    except:
+        return "Unable to retrieve all playerIds."
+
+    if not player_ids:
+       return "Could not find any records for any players."
+    
+    for id in player_ids:
+       player_ids.append(id)
+    
+    return jsonify(all_player_ids)
+
 @app.route("/getPlayerResults")
 def getPlayerResults():
 
