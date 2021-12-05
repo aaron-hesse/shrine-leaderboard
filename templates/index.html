@@ -95,11 +95,11 @@
         for (var i = 0; i < tableData.length; i++) {
             var obj = tableData[i];
             var newRow = document.getElementById('gameResultsTable').insertRow();
-            newRow.innerHTML += "<td>" + obj[0] + "</td>"
-            newRow.innerHTML += "<td>" + obj[1] + "</td>"
-            newRow.innerHTML += "<td>" + obj[2] + "</td>"
-            newRow.innerHTML += "<td>" + obj[4] + "</td>"
-            newRow.innerHTML += "<td>" + obj[3] + "</td>"
+            newRow.innerHTML += "<td>" + obj['gameid'] + "</td>"
+            newRow.innerHTML += "<td>" + obj['player1id'] + "</td>"
+            newRow.innerHTML += "<td>" + obj['player2id'] + "</td>"
+            newRow.innerHTML += "<td>" + obj['winningPlayerid'] + "</td>"
+            newRow.innerHTML += "<td>" + obj['winningPlayerWinRatio'] + "</td>"
         }
     }
 
