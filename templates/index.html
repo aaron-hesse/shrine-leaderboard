@@ -3,11 +3,6 @@
 <head>
 <script>
 
-    function onBodyLoad() {
-        hideGameResultsTable();
-        hidePlayerTable();
-    }
-
     function makeBackendAPIRequest(url, callback) {
         let request = new XMLHttpRequest();
         request.open("GET", url)
@@ -131,7 +126,7 @@
 </script>
 </head>
 
-<body onload="onBodyLoad()">
+<body>
 
 <a href="javascript:" onclick="getTop50Players()">Show Top50 Players</a> |    
 <a href="javascript:" onclick="getFirst50GameResults()">Show 50 Games</a> |
