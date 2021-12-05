@@ -108,13 +108,15 @@
         for (var i = 0; i < tableData.length; i++) {
             var obj = tableData[i];
             var newRow = document.getElementById('top50PlayerTable').insertRow();
-            newRow.innerHTML += "<td>" + obj + "</td>"
             console.log('obj: ' + obj)
+            var newRowCode = ""
             Object.keys(obj).forEach(function (key) { 
                 var value = obj[key]
                 console.log('key: ' + key)
                 console.log('value: ' + value)
+                newRowCode += "<td>" + value + "</td>"
             })
+            newRow.innerHTML = newRowCode;
         }
     }
 
