@@ -154,8 +154,8 @@ def computePlayerRankings():
         player2id = str(gameR[2])
         winningPlayerId = str(gameR[3])
 
-    # this code computes the win/loss ratio/percentage using three dicts
-    # this should be changed to an ELO ranking system instead.
+        # this code computes the win/loss ratio/percentage using three dicts
+        # this should be changed to an ELO ranking system instead.
 
         if player1id in playerGameCountDict:
             playerGameCountDict[player1id] += 1
@@ -183,9 +183,9 @@ def computePlayerRankings():
             playerWinPercentDict[player2id] = 0
 
     cur = conn.cursor()
-    cur.execute("INSERT INTO playerRanks (playerId, winPercentage) VALUES (%s,%s)", (player1_id, playerWinPercentDict[player1_id]))
-    cur.execute("INSERT INTO playerRanks (playerId, winPercentage) VALUES (%s,%s)", (player2_id, playerWinPercentDict[player2_id]))
-    conn.commit()
+    for playerid in playerWinPercentDict:
+        cur.execute("INSERT INTO playerRanks (playerId, winPercentage) VALUES (%s,%s)", (playerid, playerWinPercentDict[playerid]))
+        conn.commit()
 
     return jsonify(playerWinPercentDict)
     
