@@ -89,12 +89,13 @@
             var newRowCode = ""
 
             console.log('obj: ' + obj)
+            //console.lo
             
-            //Object.keys(obj).forEach(function (key) { 
-            //    var value = obj[key]
-            //    console.log('key: ' + key)
-            //})
-            first_value = next(iter(obj.items()))[1]
+            Object.keys(obj).forEach(function (key) { 
+                var value = obj[key]
+                console.log('key: ' + key)
+            })
+            //first_value = next(iter(obj.items()))[1]
             
 
             newRowCode += "<td>" + rank + "</td><td>" + first_value + "</td>"
