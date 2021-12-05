@@ -105,8 +105,9 @@ def getAllPlayers():
     if not all_player_ids:
        return "Could not find any records for any players."
     
-    for id in player_ids:
-       player_ids.append(id)
+    for row in player_ids:
+       player_ids.append(row[0])
+       player_ids.append(row[1])
     
     return jsonify(all_player_ids)
 
