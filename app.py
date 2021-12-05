@@ -58,7 +58,7 @@ def getTop50Players():
 
     for playerRank in top_fifty_players:
         for entry in playerRank:
-            print('playerRankObject: ' + entry)
+            print('playerRankObject: ' + str(entry))
 
     return "testing"
 
