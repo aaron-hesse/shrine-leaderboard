@@ -3,7 +3,6 @@ from flask import Flask
 from flask import request
 from flask import render_template
 from flask import jsonify
-from collections import OrderedDict
 
 import os
 import psycopg2
@@ -111,12 +110,16 @@ def getFirst50GameResults():
         print('player2id: ' + player2id)
         print('player2WinRatio: ' + str(playerWinRatioDict[player2id]))
 
-        game = OrderedDict()
+        game = {}
         game['gameid'] = str(gameR[0])
         game['player1id'] = str(gameR[1])
         game['player2id'] = str(gameR[2])
         game['winningPlayerid'] = str(gameR[3])
-        game['winningPlayerWinPercent'] = playerWinRatioDict[str(gameR[3])]
+
+        percentNumberStr = playerWinRatioDict[str(gameR[3])]
+        percentageStr = "{:.0%}".format(percentNumberStr)
+
+        game['winningPlayerWinPercent'] = percentageStr
 
         first_fifty_game_records.append(game)
     
