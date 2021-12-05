@@ -81,6 +81,7 @@
 
         emptyRankedPlayersTable()
         
+        var rank = 1
         for (var i = 0; i < tableData.length; i++) {
             var obj = tableData[i];
             var newRow = document.getElementById('top50PlayerTable').insertRow();
@@ -90,9 +91,10 @@
                 var value = obj[key]
                 console.log('key: ' + key)
                 console.log('value: ' + value)
-                newRowCode += "<td>" + value + "</td>"
+                newRowCode += "<td>" + rank + "</td><td>" + key + "</td>"
             })
             newRow.innerHTML = newRowCode;
+            rank += 1
         }
     }
 
@@ -156,8 +158,8 @@ Top Players
 <table id="top50PlayerTable" border="1" padding="5px">
     
     <tr>
-        <th>PlayerId</th>
         <th>Rank</th>
+        <th>PlayerId</th>
     </tr>
   
 </table>
