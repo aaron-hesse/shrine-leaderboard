@@ -2,10 +2,10 @@ from flask import Flask
 from flask import request
 from flask import render_template
 from flask import jsonify
-from elopy import *
 
 import os
 import psycopg2
+import elopy
 
 DATABASE_URL = os.environ['DATABASE_URL']
 
@@ -18,9 +18,9 @@ app.config["JSONIFY_PRETTYPRINT_REGULAR"] = True
 def index():
     return render_template('index.html')
 
-# add support for GET and POST or figure out which one to use the most?
 # figure out how to add authentication for the endpoints
 # look into serverless tech
+# add support for ELO. should server compute it in real time, or should it store it in a table?
 
 @app.route("/recordGameResults")
 def recordGameResults():
@@ -57,6 +57,16 @@ def getFirst50GameResults():
     #    return "Unable to retrieve game data for first 50 games."
     
     for gameR in game_records:
+
+        player1       = str(gameR[1])
+        player2       = str(gameR[2])
+        winningPlayer = str(gameR[3])
+
+        elopyInstance = elopy.Implementation()
+        elopyInstance.addPlayer(player1)
+        elopyInstance.addPlayer(player2)
+        elopyInstance.recordMatch(player1, player2, winner=winningPlayer)
+        
         game = {}
         game['gameid'] = str(gameR[0])
         game['player1id'] = str(gameR[1])
