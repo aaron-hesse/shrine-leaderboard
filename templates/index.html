@@ -3,6 +3,10 @@
 <head>
 <script>
 
+    function onBodyLoad() {
+        hideGameResultsTable();
+    }
+
     function makeBackendAPIRequest(url, callback) {
         let request = new XMLHttpRequest();
         request.open("GET", url)
@@ -42,18 +46,23 @@
 
     function hideGameResultsTable() {
         gameResultsTable = document.getElementById('gameResultsTable')
-        gameResultsTable.style.display = 'none'
+        gameResultsTable.style.visibility = 'hidden'
     }
 
     function showGameResultsTable() {
         gameResultsTable = document.getElementById('gameResultsTable')
-        gameResultsTable.style.display = 'initial'
+        gameResultsTable.style.visibility = 'visible'
     }
 
     function showPlayerTable() {
         gameResultsTable = document.getElementById('gameResultsTable')
-        gameResultsTable.style.display = 'initial'
+        gameResultsTable.style.visibility = 'visible'
     }
+
+    function hidePlayerTable() {
+        gameResultsTable = document.getElementById('gameResultsTable')
+        gameResultsTable.style.visibility = 'hidden'
+    }    
 
     function updatePlayerTable(tableData) {
 
@@ -90,7 +99,7 @@
 </script>
 </head>
 
-<body>
+<body onload="onBodyLoad()">
 
 <a href="javascript:" onclick="getFirst50GameResults()">Show Global Leaderboards</a> |
 <a href="javascript:" onclick="getAllPlayers()">Show All Players</a>
@@ -99,7 +108,7 @@
 <br/>
 <br/>
 
-<table id="gameResultsTable" border="1" padding="5px" style="visibility: hidden">
+<table id="gameResultsTable" border="1" padding="5px">
     
   <tr>
       <th>GameId</th>
@@ -110,7 +119,7 @@
 
 </table>
 
-<table id="playerTable" border="1" padding="5px" style="visibility: hidden">
+<table id="playerTable" border="1" padding="5px">
     
     <tr>
         <th>PlayerId</th>
