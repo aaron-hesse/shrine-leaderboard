@@ -45,7 +45,14 @@
         gameResultsTable.style.display = 'none'
     }
 
+    function showGameResultsTable() {
+        gameResultsTable = document.getElementById('gameResultsTable')
+        gameResultsTable.style.display = 'initial'
+    }
+
     function updatePlayerTable(tableData) {
+
+        showPlayerTable()
 
         for (var i = 0; i < tableData.length; i++) {
             var obj = tableData[i];
@@ -60,6 +67,7 @@
     function updateGameResultsTable(tableData) {
 
         emptyGameResultsTable()
+        showGameResultsTable()
 
         for (var i = 0; i < tableData.length; i++) {
             var obj = tableData[i];
