@@ -45,31 +45,13 @@
         emptyTable('gameResultsTable')
     }
 
-    function hideGameResultsTable() {
-        gameResultsTable = document.getElementById('gameResultsTable')
-        gameResultsTable.style.visibility = 'hidden'
+    function emptyRankedPlayersTable() {
+        emptyTable('top50PlayerTable')
     }
-
-    function showGameResultsTable() {
-        gameResultsTable = document.getElementById('gameResultsTable')
-        gameResultsTable.style.visibility = 'visible'
-    }
-
-    function showPlayerTable() {
-        gameResultsTable = document.getElementById('playerTable')
-        gameResultsTable.style.visibility = 'visible'
-    }
-
-    function hidePlayerTable() {
-        gameResultsTable = document.getElementById('playerTable')
-        gameResultsTable.style.visibility = 'hidden'
-    }    
 
     function updatePlayerTable(tableData) {
 
         emptyPlayerTable()
-        //hideGameResultsTable()
-        //showPlayerTable()
 
         // The JSON object returned by getAllPlayers is simply an array, there's no key->value mapping
 
@@ -84,8 +66,6 @@
     function updateGameResultsTable(tableData) {
 
         emptyGameResultsTable()
-        //hidePlayerTable()
-        //showGameResultsTable()
 
         for (var i = 0; i < tableData.length; i++) {
             var obj = tableData[i];
@@ -99,6 +79,8 @@
     }
 
     function updateRankedPlayersTable(tableData) {
+
+        emptyRankedPlayersTable()
         
         for (var i = 0; i < tableData.length; i++) {
             var obj = tableData[i];
