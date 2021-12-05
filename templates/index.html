@@ -69,16 +69,13 @@
         hideGameResultsTable()
         showPlayerTable()
 
+        // The JSON object returned by getAllPlayers is simply an array, there's no key->value mapping
+
         for (var i = 0; i < tableData.length; i++) {
             var obj = tableData[i];
             var newRow = document.getElementById('playerTable').insertRow();
+            newRow.innerHTML += "<td>" + obj + "</td>"
             console.log('obj: ' + obj)
-            for (var key in obj) {
-                var value = obj[key];
-                newRow.innerHTML += "<td>" + value + "</td>"
-                console.log('key: ' + key)
-                console.log('value: ' + value)
-            }
         }
     }
 
