@@ -20,7 +20,6 @@ def index():
 
 # figure out how to add authentication for the endpoints
 # look into serverless tech
-# add support for ELO. should server compute it in real time, or should it store it in a table?
 
 @app.route("/recordGameResults")
 def recordGameResults():
@@ -44,6 +43,22 @@ def recordGameResults():
         winningPlayerId=winning_player_id
     )
 
+
+@app.route("/getTop50Players")
+def getTop50Players():
+
+    top_fifty_players = []
+
+    try:
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM playerRanks LIMIT 50 ORDER BY playerRank DESC")
+        top_fifty_players = cur.fetchall()
+    except:
+        return "Unable to retrieve data for top 50 players."
+
+    return jsonify(top_fifty_players)
+
+
 @app.route("/getFirst50GameResults")    
 def getFirst50GameResults():
 
@@ -56,49 +71,14 @@ def getFirst50GameResults():
     except:
         return "Unable to retrieve game data for first 50 games."
 
-    playerGameCountDict = {}
-    playerWinCountDict = {}
-    playerWinRatioDict = {}
-    
     for gameR in game_records:
-
-        player1id = str(gameR[1])
-        player2id = str(gameR[2])
-        winningPlayerId = str(gameR[3])
-
-        if player1id in playerGameCountDict:
-            playerGameCountDict[player1id] += 1
-        else:
-            playerGameCountDict[player1id] = 1
-
-        if player2id in playerGameCountDict:
-            playerGameCountDict[player2id] += 1
-        else:
-            playerGameCountDict[player2id] = 1
-
-        if winningPlayerId in playerWinCountDict:
-            playerWinCountDict[winningPlayerId] += 1
-        else:
-            playerWinCountDict[winningPlayerId] = 1
-
-        player1WinRatio = ""
-        if player1id in playerWinCountDict:
-            playerWinRatioDict[player1id] = playerWinCountDict[player1id] / playerGameCountDict[player1id]
-        else:
-            playerWinRatioDict[player1id] = 0
-
-        player2WinRatio = ""
-        if player2id in playerWinCountDict:
-            playerWinRatioDict[player2id] = playerWinCountDict[player2id] / playerGameCountDict[player1id]
-        else:
-            playerWinRatioDict[player2id] = 0
 
         game = {}
         game['gameid'] = str(gameR[0])
         game['player1id'] = str(gameR[1])
         game['player2id'] = str(gameR[2])
         game['winningPlayerid'] = str(gameR[3])
-        game['winningPlayerWinPercent'] = "{:.0%}".format(playerWinRatioDict[str(gameR[3])])
+        game['winningPlayerWinPercent'] = "{:.0%}".format(playerWinPercentDict[str(gameR[3])])
 
         first_fifty_game_records.append(game)
 
@@ -149,6 +129,61 @@ def getAllPlayers():
        player_ids.append(row[1])
     
     return jsonify(player_ids)
+
+@app.route("/computePlayerRankings")
+def computePlayerRankings():
+    
+    all_game_records = []
+
+    try:
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM gameRecords")
+        all_game_records = cur.fetchall()
+    except:
+        return "Unable to retrieve data from gameRecords."
+
+    # compute related information
+
+    playerGameCountDict = {}
+    playerWinCountDict = {}
+    playerWinPercentDict = {}
+    
+    for gameR in all_game_records:    
+
+        player1id = str(gameR[1])
+        player2id = str(gameR[2])
+        winningPlayerId = str(gameR[3])
+
+    # this code computes the win/loss ratio/percentage using three dicts
+    # this should be changed to an ELO ranking system instead.
+
+        if player1id in playerGameCountDict:
+            playerGameCountDict[player1id] += 1
+        else:
+            playerGameCountDict[player1id] = 1
+
+        if player2id in playerGameCountDict:
+            playerGameCountDict[player2id] += 1
+        else:
+            playerGameCountDict[player2id] = 1
+
+        if winningPlayerId in playerWinCountDict:
+            playerWinCountDict[winningPlayerId] += 1
+        else:
+            playerWinCountDict[winningPlayerId] = 1
+
+        if player1id in playerWinCountDict:
+            playerWinPercentDict[player1id] = playerWinCountDict[player1id] / playerGameCountDict[player1id]
+        else:
+            playerWinPercentDict[player1id] = 0
+
+        if player2id in playerWinCountDict:
+            playerWinPercentDict[player2id] = playerWinCountDict[player2id] / playerGameCountDict[player1id]
+        else:
+            playerWinPercentDict[player2id] = 0
+
+    return jsonify(playerWinPercentDict)
+    # write it into playerRanks table
 
 @app.route("/getPlayerResults")
 def getPlayerResults():

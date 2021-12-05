@@ -1,5 +1,5 @@
 DROP TABLE gameRecords;
-DROP TABLE eloScores;
+DROP TABLE playerRanks;
 
 CREATE TABLE gameRecords (
     gameId INT PRIMARY KEY,
@@ -8,7 +8,8 @@ CREATE TABLE gameRecords (
     winningPlayerId INT
 );
 
-CREATE TABLE eloScores (
+CREATE TABLE playerRanks (
     playerId INT PRIMARY KEY,
-    eloScore INT
+    winPercent INT,
+    playerRank INT,
 );
