@@ -18,12 +18,12 @@ The player rankings need to be calculated prior to use. To calculate the ranking
 
 Examples of the main api endpoints and the index page (for the original version hosted on heroku):
 
-https://shrine-realpython-example-app.herokuapp.com/
-https://shrine-realpython-example-app.herokuapp.com/getGameResults?gameId=1
-https://shrine-realpython-example-app.herokuapp.com/getPlayerResults?playerId=548
-https://shrine-realpython-example-app.herokuapp.com/getFirst50GameResults
-https://shrine-realpython-example-app.herokuapp.com/getAllPlayers
-https://shrine-realpython-example-app.herokuapp.com/computePlayerRankings
-https://shrine-realpython-example-app.herokuapp.com/getTop50Players
+https://shrine-realpython-example-app.herokuapp.com/<br/>
+https://shrine-realpython-example-app.herokuapp.com/getGameResults?gameId=1<br/>
+https://shrine-realpython-example-app.herokuapp.com/getPlayerResults?playerId=548<br/>
+https://shrine-realpython-example-app.herokuapp.com/getFirst50GameResults<br/>
+https://shrine-realpython-example-app.herokuapp.com/getAllPlayers<br/>
+https://shrine-realpython-example-app.herokuapp.com/computePlayerRankings<br/>
+https://shrine-realpython-example-app.herokuapp.com/getTop50Players<br/>
 
 All of the API endpoints return JSON objects or arrays of JSON objects.
