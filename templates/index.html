@@ -88,16 +88,15 @@
             var newRow = document.getElementById('top50PlayerTable').insertRow();
             var newRowCode = ""
             var value = ""
-            
+
             console.log('obj: ' + obj)
             Object.keys(obj).forEach(function (key) {
-                value = obj[key]
+                value = obj['playerid']
                 console.log('key: ' + key)
                 console.log('value: ' + value)
             })
             
-            newRowCode += "<td>" + rank + "</td><td>" + value + "</td>"
-            newRow.innerHTML = newRowCode;
+            newRow.innerHTML = "<td>" + rank + "</td><td>" + value + "</td>"
             rank += 1
         }
     }
