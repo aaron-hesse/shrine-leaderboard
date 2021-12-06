@@ -87,7 +87,8 @@
             var obj = tableData[i];
             var newRow = document.getElementById('top50PlayerTable').insertRow();
             var newRowCode = ""
-
+            var value = ""
+            
             console.log('obj: ' + obj)
             Object.keys(obj).forEach(function (key) {
                 value = obj[key]
@@ -95,10 +96,6 @@
                 console.log('value: ' + value)
             })
             
-            var value = ""
-
-            
-
             newRowCode += "<td>" + rank + "</td><td>" + value + "</td>"
             newRow.innerHTML = newRowCode;
             rank += 1
