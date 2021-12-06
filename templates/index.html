@@ -86,9 +86,13 @@
 
             var obj = tableData[i];
             var newRow = document.getElementById('top50PlayerTable').insertRow();
-            var value = ""
+            var playerId = ""
+            var winPercentage = ""
 
-            Object.keys(obj).forEach(function (key) { value = obj['playerid'] })
+            Object.keys(obj).forEach(function (key) {
+                playerId = obj['playerid']
+                winPercentage = obj['winpercentage']
+            })
             
             newRow.innerHTML = "<td>" + rank + "</td><td>" + value + "</td>"
             rank += 1
@@ -157,6 +161,7 @@ Top Players
     <tr>
         <th>Rank</th>
         <th>PlayerId</th>
+        <th>WinPercent</th>
     </tr>
   
 </table>
