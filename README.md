@@ -14,7 +14,7 @@ When a game ends, that 'recordGameResults' API endpoint should be called, provid
 
 The database schema is contained in schema.sql
 
-The player rankings need to be calculated prior to use. To calculate the rankings, the API endpoint is '/computerPlayerRankings'. These rankings are stored in the table playerRanks.
+The player rankings need to be calculated prior to use. To calculate the rankings, the API endpoint is '/computePlayerRankings'. These rankings are stored in the table playerRanks.
 
 Examples of the main api endpoints and the index page (for the original version hosted on heroku):
 
