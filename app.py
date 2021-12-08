@@ -18,9 +18,6 @@ app.config["JSONIFY_PRETTYPRINT_REGULAR"] = True
 def index():
     return render_template('index.html')
 
-# figure out how to add authentication for the endpoints
-# look into serverless tech
-
 @app.route("/recordGameResults")
 def recordGameResults():
     

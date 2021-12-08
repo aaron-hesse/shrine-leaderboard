@@ -10,5 +10,6 @@ CREATE TABLE gameRecords (
 
 CREATE TABLE playerRanks (
     playerId INT PRIMARY KEY,
-    winPercent DECIMAL
+    winPercent INT,
+    playerRank INT,
 );
