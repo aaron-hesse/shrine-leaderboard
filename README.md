@@ -19,6 +19,7 @@ The player rankings need to be calculated prior to use. To calculate the ranking
 Examples of the main api endpoints and the index page (for the original version hosted on heroku):
 
 https://shrine-realpython-example-app.herokuapp.com/<br/>
+https://shrine-realpython-example-app.herokuapp.com/recordGameResults?gameId=1&player1Id=2&player2Id=3&winningPlayerId=2<br/>
 https://shrine-realpython-example-app.herokuapp.com/getGameResults?gameId=1<br/>
 https://shrine-realpython-example-app.herokuapp.com/getPlayerResults?playerId=548<br/>
 https://shrine-realpython-example-app.herokuapp.com/getFirst50GameResults<br/>
