@@ -187,7 +187,7 @@ def computePlayerRankings():
 
     cur = conn.cursor()
     for playerid in playerWinPercentDict:
-        cur.execute("INSERT INTO playerRanks (playerId, winPercent) VALUES (%s,%s)", (playerid, playerWinPercentDict[playerid]))
+        cur.execute("INSERT INTO playerRanks (playerId, winPercent) VALUES (%s,%s) ON CONFLICT (playerId) DO UPDATE SET playerid=%s", (playerid, playerWinPercentDict[playerid], playerid))
         conn.commit()
 
     return jsonify(playerWinPercentDict)
