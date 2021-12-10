@@ -4,8 +4,8 @@ const FIRST_FIFTY_GAME_RESULTS_TABLE_NAME = "gameResultsTable"
 const BACKEND_SERVER_URL = "https://shrine-realpython-example-app.herokuapp.com"
 
 const GET_ALL_PLAYERS_API = "/getAllPlayers"
-const GET_FIRST_FIFTY_RESULTS = "/getFirst50GameResults"
-const GET_TOP_FIFTY_PLAYERS = "/getTop50Players"
+const GET_FIRST_FIFTY_RESULTS_API = "/getFirst50GameResults"
+const GET_TOP_FIFTY_PLAYERS_API = "/getTop50Players"
 
 function makeBackendAPIRequest(url, callback) {
     let request = new XMLHttpRequest();
@@ -29,11 +29,11 @@ function getAllPlayers() {
 }
 
 function getFirst50GameResults() {
-    makeBackendAPIRequest(BACKEND_SERVER_URL + GET_FIRST_FIFTY_RESULTS, updateGameResultsTable)
+    makeBackendAPIRequest(BACKEND_SERVER_URL + GET_FIRST_FIFTY_RESULTS_API, updateGameResultsTable)
 }
 
 function getTop50Players() {
-    makeBackendAPIRequest(BACKEND_SERVER_URL + GET_TOP_FIFTY_PLAYERS, updateRankedPlayersTable)
+    makeBackendAPIRequest(BACKEND_SERVER_URL + GET_TOP_FIFTY_PLAYERS_API, updateRankedPlayersTable)
 }
 
 function emptyTable(tableName) {
