@@ -66,7 +66,6 @@ function updatePlayerTable(tableData) {
         const obj = tableData[i]
         var newRow = getTable('playerTable').insertRow()
         newRow.innerHTML += "<td>" + obj + "</td>"
-        console.log('obj: ' + obj)
     }
 }
 
@@ -75,14 +74,11 @@ function updateGameResultsTable(tableData) {
     emptyGameResultsTable()
 
     for (var i = 0; i < tableData.length; i++) {
-        const obj = tableData[i]
         var newRow = getTable('gameResultsTable').insertRow()
-        newRow.innerHTML += "<td>" + obj['gameid'] + "</td>"
-        newRow.innerHTML += "<td>" + obj['player1id'] + "</td>"
-        newRow.innerHTML += "<td>" + obj['player1score'] + "</td>"
-        newRow.innerHTML += "<td>" + obj['player2id'] + "</td>"
-        newRow.innerHTML += "<td>" + obj['player2score'] + "</td>"
-        newRow.innerHTML += "<td>" + obj['winningPlayerid'] + "</td>"
+        const obj = tableData[i]
+        Object.values(obj).forEach(value => {
+            newRow.innerHTML += "<td>" + value + "</td>"
+        });
     }
 }
 
@@ -93,17 +89,19 @@ function updateRankedPlayersTable(tableData) {
     var rank = 1
     for (var i = 0; i < tableData.length; i++) {
         
-        var playerId = ""
-        var winPercentage = ""
+        var playerid = ""
+        var winpercent = ""
         const obj = tableData[i]
-        Object.keys(obj).forEach(function (key) {
-            playerId = obj['playerid']
-            winCount = obj['wincount']
-            winPercentage = obj['winpercent']
-        })
+
+        console.log('obj: ' + obj)
+
+        playerid = obj['playerid']
+        totalscore = obj['totalscore']
+        wincount = obj['wincount']
+        winpercent = obj['winpercent']
         
-        var newRow = getTable('top50PlayerTable').insertRow()
-        newRow.innerHTML = "<td>" + rank + "</td><td>" + playerId + "</td><td>" + winCount + "</td><td>" + winPercentage + "</td>"
+        var newRow = getTable(TOP_FIFTY_PLAYER_TABLE_NAME).insertRow()
+        newRow.innerHTML = "<td>" + rank + "</td><td>" + playerid + "</td><td>" + totalscore + "</td><td>" + wincount + "</td><td>" + winpercent + "</td>"
         rank++
     }
 }

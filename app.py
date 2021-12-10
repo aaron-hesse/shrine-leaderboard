@@ -60,8 +60,9 @@ def getTop50Players():
     for playerRank in top_fifty_players:
         playerRankData = {}
         playerRankData['playerid'] = playerRank[0]
-        playerRankData['wincount'] = playerRank[1]
-        playerRankData['winpercent'] = float(playerRank[2])
+        playerRankData['totalscore'] = playerRank[1]
+        playerRankData['wincount'] = playerRank[2]
+        playerRankData['winpercent'] = "{:.0%}".format(float(playerRank[3]))
         playerRankList.append(playerRankData)
 
     return jsonify(playerRankList)
@@ -74,7 +75,7 @@ def getFirst50GameResults():
 
     try:
         cur = conn.cursor()
-        cur.execute("SELECT * FROM gameRecords LIMIT 50")
+        cur.execute("SELECT * FROM gameRecords ORDER BY gameId ASC LIMIT 50")
         game_records = cur.fetchall()
     except:
         return "Unable to retrieve game data for first 50 games."
@@ -152,12 +153,21 @@ def computePlayerRankings():
     for game_record in all_game_records:    
         buildPlayerRankingDictionaries(playerGameCountDict, playerWinCountDict, playerWinPercentDict, playerTotalScoreDict, game_record)
 
+    print("playerGameCountDict: ")
+    printDict(playerGameCountDict)
+    print("playerWinCountDict: ")
+    printDict(playerWinCountDict)
+    print("playerWinPercentDict:")
+    printDict(playerWinPercentDict)
+    print("playerTotalScoreDict: ")
+    printDict(playerTotalScoreDict)
+
     playerWinCount = 0
     cur = conn.cursor()
     for playerid in playerWinPercentDict:
         if playerid in playerWinCountDict:
             playerWinCount = playerWinCountDict[playerid]
-        cur.execute("INSERT INTO playerRanks (playerId, totalScore, winCount, winPercent) VALUES (%s,%s,%s,%s) ON CONFLICT (playerId) DO UPDATE SET winPercent=excluded.winPercent, winCount=excluded.winCount", (playerid, playerTotalScoreDict[playerid], playerWinCount, playerWinPercentDict[playerid]))
+        cur.execute("INSERT INTO playerRanks (playerId, totalScore, winCount, winPercent) VALUES (%s,%s,%s,%s) ON CONFLICT (playerId) DO UPDATE SET totalScore=excluded.totalScore, winPercent=excluded.winPercent, winCount=excluded.winCount", (playerid, playerTotalScoreDict[playerid], playerWinCount, playerWinPercentDict[playerid]))
         conn.commit()
 
     return jsonify(playerWinPercentDict)
@@ -197,6 +207,9 @@ def buildPlayerRankingDictionaries(playerGameCountDict, playerWinCountDict, play
         player2score = str(game_record[4])
         winningPlayerId = str(game_record[5])
 
+        print('player1score: ' + player1score)
+        print('player2score: ' + player2score)
+
         if player1id in playerGameCountDict:
             playerGameCountDict[player1id] += 1
         else:
@@ -222,15 +235,15 @@ def buildPlayerRankingDictionaries(playerGameCountDict, playerWinCountDict, play
         else:
             playerWinPercentDict[player2id] = 0
 
-        if player1score in playerTotalScoreDict:
-            playerTotalScoreDict[player1id] += 1
+        if player1id in playerTotalScoreDict:
+            playerTotalScoreDict[player1id] += int(player1score)
         else:
-            playerTotalScoreDict[player1id] = 0
+            playerTotalScoreDict[player1id] = int(player1score)
 
-        if player2score in playerTotalScoreDict:
-            playerTotalScoreDict[player2id] += 1
+        if player2id in playerTotalScoreDict:
+            playerTotalScoreDict[player2id] += int(player2score)
         else:
-            playerTotalScoreDict[player2id] = 0
+            playerTotalScoreDict[player2id] = int(player1score)
 
 def buildGameObjectFromGameRecord(game_record):
     game = {}
@@ -240,6 +253,14 @@ def buildGameObjectFromGameRecord(game_record):
     game['player2id'] = str(game_record[3])
     game['player2score'] = str(game_record[4])
     game['winningplayerid'] = str(game_record[5])
+
+    print('game_record:')
+    for entry in game_record:
+        print(entry)
+
+    print('game:')
+    printDict(game)
+
     return game
 
 def printDict(dict):
