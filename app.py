@@ -1,4 +1,3 @@
-from typing import OrderedDict
 from flask import Flask
 from flask import request
 from flask import render_template
@@ -23,12 +22,14 @@ def recordGameResults():
     
     game_id = int(request.args.get('gameId'))
     player1_id = int(request.args.get('player1Id'))
+    player1_score = int(request.args.get('player1score'))
     player2_id = int(request.args.get('player2Id'))
+    player2_score = int(request.args.get('player2score'))
     winning_player_id = int(request.args.get('winningPlayerId'))
 
     try:
         cur = conn.cursor()
-        cur.execute("INSERT INTO gameRecords (gameId, player1Id, player2Id, winningPlayerId) VALUES (%s,%s,%s,%s)", (game_id,player1_id,player2_id,winning_player_id) )
+        cur.execute("INSERT INTO gameRecords (gameId, player1Id, player1score, player2Id, player2score, winningPlayerId) VALUES (%s,%s,%s,%s,%s,%s)", (game_id,player1_id,player1_score,player2_id,player2_score,winning_player_id) )
         conn.commit()
     except:
         return "Unable to save game data. Game results with that ID may already exist."
@@ -36,7 +37,9 @@ def recordGameResults():
     return jsonify(
         gameId=game_id,
         player1Id=player1_id,
+        player1Score=player1_score,
         player2Id=player2_id,
+        player2Score=player2_score,
         winningPlayerId=winning_player_id
     )
 
@@ -57,7 +60,8 @@ def getTop50Players():
     for playerRank in top_fifty_players:
         playerRankData = {}
         playerRankData['playerid'] = playerRank[0]
-        playerRankData['winpercentage'] = float(playerRank[1])
+        playerRankData['wincount'] = playerRank[1]
+        playerRankData['winpercent'] = float(playerRank[2])
         playerRankList.append(playerRankData)
 
     return jsonify(playerRankList)
@@ -75,14 +79,8 @@ def getFirst50GameResults():
     except:
         return "Unable to retrieve game data for first 50 games."
 
-    for gameR in game_records:
-
-        game = {}
-        game['gameid'] = str(gameR[0])
-        game['player1id'] = str(gameR[1])
-        game['player2id'] = str(gameR[2])
-        game['winningPlayerid'] = str(gameR[3])
-
+    for game_record in game_records:
+        game = buildGameObjectFromGameRecord(game_record)
         first_fifty_game_records.append(game)
 
     return jsonify(first_fifty_game_records)
@@ -91,7 +89,6 @@ def getFirst50GameResults():
 def getGameResults():
 
     game_id_str = request.args.get('gameId')
-
     game_record = None
 
     try:
@@ -107,8 +104,10 @@ def getGameResults():
     return jsonify(
         gameId=game_record[0],
         player1Id=game_record[1],
-        player2Id=game_record[2],
-        winningPlayerId=game_record[3]
+        player1_score=game_record[2],
+        player2Id=game_record[3],
+        player2_score=game_record[4],
+        winningPlayerId=game_record[5]
     )
 
 @app.route("/getAllPlayers")
@@ -138,27 +137,65 @@ def computePlayerRankings():
     
     all_game_records = []
 
-    #try:
-    cur = conn.cursor()
-    cur.execute("SELECT * FROM gameRecords")
-    all_game_records = cur.fetchall()
-    #except:
-    #    return "Unable to retrieve data from gameRecords."
-
-    # compute related information
+    try:
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM gamerecords")
+        all_game_records = cur.fetchall()
+    except:
+        return "Unable to retrieve data from gamerecords."
 
     playerGameCountDict = {}
     playerWinCountDict = {}
     playerWinPercentDict = {}
+    playerTotalScoreDict = {}
     
-    for gameR in all_game_records:    
+    for game_record in all_game_records:    
+        buildPlayerRankingDictionaries(playerGameCountDict, playerWinCountDict, playerWinPercentDict, playerTotalScoreDict, game_record)
 
-        player1id = str(gameR[1])
-        player2id = str(gameR[2])
-        winningPlayerId = str(gameR[3])
+    playerWinCount = 0
+    cur = conn.cursor()
+    for playerid in playerWinPercentDict:
+        if playerid in playerWinCountDict:
+            playerWinCount = playerWinCountDict[playerid]
+        cur.execute("INSERT INTO playerRanks (playerId, totalScore, winCount, winPercent) VALUES (%s,%s,%s,%s) ON CONFLICT (playerId) DO UPDATE SET winPercent=excluded.winPercent, winCount=excluded.winCount", (playerid, playerTotalScoreDict[playerid], playerWinCount, playerWinPercentDict[playerid]))
+        conn.commit()
+
+    return jsonify(playerWinPercentDict)
+    
+
+@app.route("/getPlayerResults")
+def getPlayerResults():
+
+    player_id_str = request.args.get('playerId')
+    game_records  = None
+
+    try:
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM gameRecords WHERE player1Id=%s OR player2Id=%s", (player_id_str,player_id_str))
+        game_records = cur.fetchall()
+    except:
+        return "Unable to select game data for that playerId."
+
+    if not game_records:
+        return "No player results exist for that playerId. The playerId may not exist."
+
+    all_game_records = []
+    for game_record in game_records:
+        game = buildGameObjectFromGameRecord(game_record)
+        all_game_records.append(game)
+    
+    return jsonify(all_game_records)
+
+def buildPlayerRankingDictionaries(playerGameCountDict, playerWinCountDict, playerWinPercentDict, playerTotalScoreDict, game_record):
 
         # this code computes the win/loss ratio/percentage using three dicts
         # this should be changed to an ELO ranking system instead.
+
+        player1id = str(game_record[1])
+        player1score = str(game_record[2])
+        player2id = str(game_record[3])
+        player2score = str(game_record[4])
+        winningPlayerId = str(game_record[5])
 
         if player1id in playerGameCountDict:
             playerGameCountDict[player1id] += 1
@@ -185,39 +222,26 @@ def computePlayerRankings():
         else:
             playerWinPercentDict[player2id] = 0
 
-    cur = conn.cursor()
-    for playerid in playerWinPercentDict:
-        cur.execute("INSERT INTO playerRanks (playerId, winPercent) VALUES (%s,%s) ON CONFLICT (playerId) DO UPDATE SET playerid=%s", (playerid, playerWinPercentDict[playerid], playerid))
-        conn.commit()
+        if player1score in playerTotalScoreDict:
+            playerTotalScoreDict[player1id] += 1
+        else:
+            playerTotalScoreDict[player1id] = 0
 
-    return jsonify(playerWinPercentDict)
-    
+        if player2score in playerTotalScoreDict:
+            playerTotalScoreDict[player2id] += 1
+        else:
+            playerTotalScoreDict[player2id] = 0
 
-@app.route("/getPlayerResults")
-def getPlayerResults():
+def buildGameObjectFromGameRecord(game_record):
+    game = {}
+    game['gameid'] = str(game_record[0])
+    game['player1id'] = str(game_record[1])
+    game['player1score'] = str(game_record[2])
+    game['player2id'] = str(game_record[3])
+    game['player2score'] = str(game_record[4])
+    game['winningplayerid'] = str(game_record[5])
+    return game
 
-    player_id_str = request.args.get('playerId')
-
-    game_records = None
-
-    try:
-        cur = conn.cursor()
-        cur.execute("SELECT * FROM gameRecords WHERE player1Id=%s OR player2Id=%s", (player_id_str,player_id_str))
-        game_records = cur.fetchall()
-    except:
-        return "Unable to select game data for that playerId."
-
-    if not game_records:
-        return "No player results exist for that playerId. The playerId may not exist."
-
-    all_game_records = []
-    
-    for gameR in game_records:
-        game = {}
-        game['gameid'] = str(gameR[0])
-        game['player1id'] = str(gameR[1])
-        game['player2id'] = str(gameR[2])
-        game['winningplayerid'] = str(gameR[3])
-        all_game_records.append(game)
-    
-    return jsonify(all_game_records)
+def printDict(dict):
+    for key, value in dict.items():
+        print(key, ' : ', value)
