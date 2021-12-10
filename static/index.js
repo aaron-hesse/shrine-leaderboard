@@ -1,8 +1,11 @@
-
 const TOP_FIFTY_PLAYER_TABLE_NAME = "top50PlayerTable"
 const ALL_PLAYERS_TABLE_NAME = "playerTable"
 const FIRST_FIFTY_GAME_RESULTS_TABLE_NAME = "gameResultsTable"
 const BACKEND_SERVER_URL = "https://shrine-realpython-example-app.herokuapp.com"
+
+const GET_ALL_PLAYERS_API = "/getAllPlayers"
+const GET_FIRST_FIFTY_RESULTS = "/getFirst50GameResults"
+const GET_TOP_FIFTY_PLAYERS = "/getTop50Players"
 
 function makeBackendAPIRequest(url, callback) {
     let request = new XMLHttpRequest();
@@ -22,19 +25,20 @@ function makeBackendAPIRequest(url, callback) {
 }
 
 function getAllPlayers() {
-    makeBackendAPIRequest(BACKEND_SERVER_URL + "/getAllPlayers", updatePlayerTable)
+    makeBackendAPIRequest(BACKEND_SERVER_URL + GET_ALL_PLAYERS_API, updatePlayerTable)
 }
 
 function getFirst50GameResults() {
-    makeBackendAPIRequest(BACKEND_SERVER_URL + "/getFirst50GameResults", updateGameResultsTable)
+    makeBackendAPIRequest(BACKEND_SERVER_URL + GET_FIRST_FIFTY_RESULTS, updateGameResultsTable)
 }
 
 function getTop50Players() {
-    makeBackendAPIRequest(BACKEND_SERVER_URL + "/getTop50Players", updateRankedPlayersTable)
+    makeBackendAPIRequest(BACKEND_SERVER_URL + GET_TOP_FIFTY_PLAYERS, updateRankedPlayersTable)
 }
 
 function emptyTable(tableName) {
-    const table = getTable(tableName);
+
+    let table = getTable(tableName)
     const rowCount = table.rows.length;
     for (var i = 1; i < rowCount; i++)
         table.deleteRow(1)
@@ -60,12 +64,9 @@ function updatePlayerTable(tableData) {
 
     emptyPlayerTable()
 
-    // The JSON object returned by getAllPlayers is simply an array, there's no key->value mapping
-
     for (var i = 0; i < tableData.length; i++) {
-        const obj = tableData[i]
         var newRow = getTable('playerTable').insertRow()
-        newRow.innerHTML += "<td>" + obj + "</td>"
+        newRow.innerHTML += "<td>" + tableData[i] + "</td>"
     }
 }
 
@@ -75,8 +76,7 @@ function updateGameResultsTable(tableData) {
 
     for (var i = 0; i < tableData.length; i++) {
         var newRow = getTable('gameResultsTable').insertRow()
-        const obj = tableData[i]
-        Object.values(obj).forEach(value => {
+        Object.values(tableData[i]).forEach(value => {
             newRow.innerHTML += "<td>" + value + "</td>"
         });
     }
@@ -88,20 +88,9 @@ function updateRankedPlayersTable(tableData) {
     
     var rank = 1
     for (var i = 0; i < tableData.length; i++) {
-        
-        var playerid = ""
-        var winpercent = ""
         const obj = tableData[i]
-
-        console.log('obj: ' + obj)
-
-        playerid = obj['playerid']
-        totalscore = obj['totalscore']
-        wincount = obj['wincount']
-        winpercent = obj['winpercent']
-        
         var newRow = getTable(TOP_FIFTY_PLAYER_TABLE_NAME).insertRow()
-        newRow.innerHTML = "<td>" + rank + "</td><td>" + playerid + "</td><td>" + totalscore + "</td><td>" + wincount + "</td><td>" + winpercent + "</td>"
+        newRow.innerHTML = "<td>" + rank + "</td><td>" + obj['playerid'] + "</td><td>" + obj['totalscore'] + "</td><td>" + obj['wincount'] + "</td><td>" + obj['winpercent'] + "</td>"
         rank++
     }
 }
